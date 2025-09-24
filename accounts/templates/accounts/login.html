@@ -1,0 +1,63 @@
+{% extends 'base.html'%}
+{%  block content %}
+<div class="login-container">
+    <h3>Login to your account</h3>
+    <form action="">
+        {% csrf_token %}
+        <label for="email" aria-placeholder="Enter your email to login">Email</label>
+        <input type="text"><br>
+
+        <label for="password" aria-placeholder="Enter yuor password to login">password</label>
+        <input type="password">
+        <br>
+
+        <button type="submit">Login</button><br>
+
+        <p>Don't have account?<a href="{% url 'register'%}">Register Here</a></p>
+    </form>
+</div>
+<style>
+    .login-container {
+        background-color: aliceblue;
+        border-radius: 5px;
+        text-align: center;
+        padding:  15px;
+        margin: auto;
+        width: 400px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .login-container h3 {
+        color: #106366;
+        font-style: oblique;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    .login-container label {
+      color: cadetblue;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;  
+    }
+    .login-container input {
+        border: 2px solid #4cda4c;
+        border-radius: 5px;
+        padding: 15px;
+        outline: none;
+        width:100%;
+        margin-bottom: 20px;
+        box-shadow: 1 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .login-container button {
+        background-color: #3ca5d6;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        color: white;
+        font-weight: bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    .login-container p {
+        color: cadetblue;
+        font-style: oblique;
+        font-size: large;
+    }
+</style>
+{% endblock %}

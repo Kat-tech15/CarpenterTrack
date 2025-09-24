@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="register-container">
+    <form action="">
+        <h3>Create account</h3>
+        <label for="email" aria-placeholder="Enter Email">Email</label>
+        <input type="text"><br>
+
+        <label for="password" aria-placeholder="Enter password">Password</label>
+        <input type="text"><br>
+        
+        <label for="password" aria-placeholder="Confirm your password">Confirm Password</label>
+        <input type="text"><br>
+
+        <button type="submit">Register</button><br>
+
+        <p>Already have an account?<a href="{% url 'login'%}">Login</a></p>
+    </form>
+</div>
+<style>
+    .register-container {
+        width: 400px;
+        background-color: aliceblue;
+        border-radius: 5px;
+        text-align: center;
+        margin: auto;
+        padding:  15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .register-container h3 {
+        color: #106366;
+        font-style: oblique;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    .register-container label {
+        color: cadetblue;
+        font-style: normal;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .register-container input {
+        width: 100%;
+        border-radius: 5px;
+        padding: 15px;
+        outline: none;
+        margin-bottom: 20px;
+        border: 2px solid #4cda4c;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .register-container button {
+        width: 100%;
+        color: white;
+        background-color: #3ca5d6;
+        border-radius: 5px;
+        padding: 15px;
+        border: none;
+        font-weight: bold;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .register-container p {
+        color: cadetblue;
+        font-style: oblique;
+        font-size: large;
+    }
+</style>
+{% endblock %}

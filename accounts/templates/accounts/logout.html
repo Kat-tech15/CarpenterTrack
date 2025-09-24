@@ -1,0 +1,29 @@
+{%extends 'base.html' %}
+{% block content %}
+<div class="logout-container">
+    <form method="post" action="">
+        {% csrf_token %}
+        <p>We regret seeing you leave😢</p>
+        <button type="submit">Logout</button>
+        <li><a href="{% url 'login'%}"></a>Login</li>
+    </form>
+</div>
+<style>
+    .logout-container {
+        background-color: aliceblue;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        margin: auto;
+    }
+    .logout-container button {
+        background-color: #3ca5d6;
+        border-radius: 50px;
+        border: none;
+        padding: 15px;
+        color: white;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+</style>
+{% endblock %}
