@@ -47,5 +47,18 @@ def logout(request):
     messages.success(request, "You have been logged out")
     return render(request, 'accounts/logout.html')
 
+def view_profile(request):
+    profile = request.user.profile
 
+    if request.method =="POST":
+        profile.phone_number = request.POST.get("phone_number")
+        profile.location = request.POST.get("location")
+
+        if 'profile_image' in request.FILES:
+            profile.profile_image = request.FILES['profile_image']
+        
+        profile.save()
+        messages.success(request, "Profile updated successfully.")
+
+    return render(request, 'accounts/profile.html', {"profile": profile})
 
