@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import get_user_model, logout, login, authenticate
 from django.contrib import messages
-from .models import CustomUser
+from django.contrib.auth.models  import User
 
 
 def register(request):
@@ -15,14 +15,15 @@ def register(request):
             messages.error(request, "Passwords do not match.")
             return redirect('register')
         
-        if CustomUser.objects.filter(username=username).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
             return redirect("register")
         
-        user = CustomUser.objects.create_user(username=username, email=email, password=password1)
+        user = User.objects.create_user(username=username, email=email, password=password1)
         user.save()
         messages.success(request, "Registration successful.")
-        return redirect('login')  # Redirect to a home page or dashboard after registration
+        return redirect('login')  
+
     return render(request, 'accounts/register.html')
 
 def login(request):
@@ -62,3 +63,14 @@ def view_profile(request):
 
     return render(request, 'accounts/profile.html', {"profile": profile})
 
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        if not name or not email or not message:
+            messages.error(request, 'These fields are required.')
+            return redirect('contact')
+
+    return render(request, 'accounts/contact.html')

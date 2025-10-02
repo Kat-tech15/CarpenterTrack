@@ -1,65 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="register-container">
-    <form action="">
-        <h3>Create account</h3>
-        <label for="email" aria-placeholder="Enter Email">Email</label>
-        <input type="text"><br>
+{% load static %}
+<div class="d-flex justify-content-center">
+    <div class="mt-5 card shandow-lg p-4" style="width: 400px; border-radius: 15px;">
+        <h3 class="text-center mt-4">Create account</h3>
 
-        <label for="password" aria-placeholder="Enter password">Password</label>
-        <input type="text"><br>
-        
-        <label for="password" aria-placeholder="Confirm your password">Confirm Password</label>
-        <input type="text"><br>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-        <button type="submit">Register</button><br>
+        <form method="POST">
+            {% csrf_token %}
 
-        <p>Already have an account?<a href="{% url 'login'%}">Login</a></p>
-    </form>
+            <div class="mb-3">
+                <label for="name" class="fomr-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="fomr-label">Email</label>
+                <input type="text" name="email" id="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="fomr-label">Password</label>
+                <input type="password"  name="password" id="password" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="fomr-label">Confirm Password</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button><br>
+
+            <p class="text-center" style="font-style: oblique;">Already have an account?<a href="{% url 'login'%}">Login</a></p>
+        </form>
+    </div>
 </div>
-<style>
-    .register-container {
-        width: 400px;
-        background-color: aliceblue;
-        border-radius: 5px;
-        text-align: center;
-        margin: auto;
-        padding:  15px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    .register-container h3 {
-        color: #106366;
-        font-style: oblique;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
-    .register-container label {
-        color: cadetblue;
-        font-style: normal;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-    .register-container input {
-        width: 100%;
-        border-radius: 5px;
-        padding: 15px;
-        outline: none;
-        margin-bottom: 20px;
-        border: 2px solid #4cda4c;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    .register-container button {
-        width: 100%;
-        color: white;
-        background-color: #3ca5d6;
-        border-radius: 5px;
-        padding: 15px;
-        border: none;
-        font-weight: bold;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-    .register-container p {
-        color: cadetblue;
-        font-style: oblique;
-        font-size: large;
-    }
-</style>
+
 {% endblock %}
