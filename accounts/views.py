@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import get_user_model, logout, login, authenticate
 from django.contrib import messages
 from django.contrib.auth.models  import User
-
+from .models import Contact
 
 def register(request):
     if request.method == "POST":
@@ -48,7 +48,7 @@ def logout(request):
     messages.success(request, "You have been logged out")
     return render(request, 'accounts/logout.html')
 
-def view_profile(request):
+def profile(request):
     profile = request.user.profile
 
     if request.method =="POST":
@@ -69,8 +69,13 @@ def contact(request):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        if not name or not email or not message:
-            messages.error(request, 'These fields are required.')
-            return redirect('contact')
+        Contact.objects.create(
+            name=name,
+            email=email,
+            message=message
+        )
+        messages.success(request, "Message submitted successfully!")
+        return redirect('contact')
+        
 
     return render(request, 'accounts/contact.html')
