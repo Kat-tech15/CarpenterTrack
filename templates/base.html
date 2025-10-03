@@ -14,12 +14,13 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse text-white py-0" id="navbarNav">
+            <div class="collapse navbar-collapse text-white" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-3">
-                    <li class="nav-item"><a class="nav-link" href="/"></a>Home</li>
-                    <li class="nav-item"><a class="nav-link" href="{url 'register' }"></a>Register</li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"></a>Login</li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}"></a>Contact Us</li>
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
                 </ul>
             </div>
         </div>  
@@ -48,6 +49,10 @@
             color: white;
             text-align: center;
             padding: 10px 0;
+        }
+        .form-control::placeholder {
+            color: #aaa;
+            opacity : 0.7;
         }
     </style>
 </body>

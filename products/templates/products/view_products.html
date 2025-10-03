@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <h4 class="mb-4 text-center" style="color: cadetblue; font-style: oblique;">View Products</h4>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img src="" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Table</h5>
+                    <p class="card-text">A study table made from hardwood.</p>
+                    <p class="fw-bold text-primary">$25</p>
+                </div>
+                <li class="mb-3 btn btn-primary m-2"><a class="nav-link" href="{% url 'upload_product' %}">Order</a></li>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img src="" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Master Bed</h5>
+                    <p class="card-text">A 5 by 6 bed.</p>
+                    <p class="fw-bold text-primary">$45</p>
+                </div>
+                <li class="mb-3 btn btn-primary m-2"><a class="nav-link" href="{% url 'upload_product' %}">Order</a></li>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img src="" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Sofaset</h5>
+                    <p class="card-text">A 3 seater sofaset. </p>
+                    <p class="fw-bold text-primary">$100</p>
+                </div>
+                <li class="mb-3 btn btn-primary m-2"><a class="nav-link" href="{% url 'upload_product' %}">Order</a></li>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img src="" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Table</h5>
+                    <p class="card-text">A dinning table.</p>
+                    <p class="fw-bold text-primary">$50</p>
+                </div>
+                <li class="mb-3 btn btn-primary m-2"><a class="nav-link" href="{% url 'upload_product' %}">Order</a></li>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
