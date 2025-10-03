@@ -12,13 +12,15 @@
         {% endif %}
         <form method="POST">
             {% csrf_token %}
-            <div class="mb-3">
-                <label for="email" class="fomr-label">Email</label>
+            <div class="mb-3 input-icon">
+                <label for="email" class="fomr-label visually-hidden ">Email</label>
+                <i class="bi bi-envelope"></i>
                 <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email to login" required>
             </div>
 
-            <div class="mb-3">
-                <label for="password" class="fomr-label">Password</label>
+            <div class="mb-3 input-icon">
+                <label for="password" class="fomr-label visually-hidden">Password</label>
+                <i class="bi bi-lock"></i>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Enter your passsword to login" required>
             </div>
             
