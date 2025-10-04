@@ -14,13 +14,16 @@ def upload_product(request):
             description=description,
             price=price,
         )
+        messages.success(request, "Product uploaded successfully!")
         return redirect('upload_product')
-        messages.uccess(request, "Product uploaded successfully!")
 
     return render(request, 'products/upload_product.html')
 
 def view_products(request):
-    return render(request, 'products/view_products.html')
+      
+    products = Product.objects.all().order_by('-id')[:5]
+
+    return render(request, 'products/view_products.html',{'products':products})
 
 
 def update_product(request):
