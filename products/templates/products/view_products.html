@@ -1,71 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <div class="container mt-5">
-    <h4 class="mb-4 text-center" style="color: cadetblue; font-style: oblique;">View Products</h4>
-        <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <img src="" alt="" class="card-img-top">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Table</h5>
-                    <p class="card-text">A study table made from hardwood.</p>
-                    <p class="fw-bold text-primary">$25</p>
-                </div>
-                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <img src="" alt="" class="card-img-top">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Master Bed</h5>
-                    <p class="card-text">A 5 by 6 bed.</p>
-                    <p class="fw-bold text-primary">$45</p>
-                </div>
-                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <img src="" alt="" class="card-img-top">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Sofaset</h5>
-                    <p class="card-text">A 3 seater sofaset.</p>
-                    <p class="fw-bold text-primary">$100</p>
-                </div>
-                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <img src="" alt="" class="card-img-top">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Table</h5>
-                    <p class="card-text">A dining table.</p>
-                    <p class="fw-bold text-primary">$50</p>
-                </div>
-                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
-            </div>
-        </div>
-    </div>
+    <h4 class="mb-4 text-center" style="color: cadetblue; font-style: oblique;">Available Products</h4>
+
     <div class="row">
         {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="#" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                        <p class="fw-bold text-primary">${{ product.price }}</p>
-                        <a href="{% url 'place_order' %}" class="btn btn-primary m-2 w-100">Order</a>
-                    </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'images/no-image.jpg' %}" class="card-img-top" alt="No image">
+                {% endif %}
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description|truncatechars:80 }}</p>
+                    <p class="fw-bold text-primary">Ksh {{ product.price }}</p>
+                    <a href="{% url 'place_order' %}?product_name={{ product.name }}" class="btn btn-primary w-100">Order</a>
                 </div>
             </div>
+        </div>
         {% empty %}
-            <p class="text-center" style="font-style: oblique; color: #ccc;">
-                No products in the moment.
-            </p>
+        <p class="text-center text-muted mt-4">No products available at the moment.</p>
         {% endfor %}
+    </div>
+    <div class="text-center mt-5">
+        <h5 class="text-secondary mb-3">Can’t find what you’re looking for?</h5>
+        <p>You can request a custom product. Describe what you want, and optionally upload a photo for reference.</p>
+        <a href="{% url 'place_order' %}" class="btn btn-outline-dark">
+            <i class="bi bi-hammer"></i> Request Custom Product
+        </a>
     </div>
 </div>
 

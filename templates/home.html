@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container bg-skyblue">
-    
+<div class="container">
 </div>
-<section class="text-center">
+<section class="home text-center" id="home">
     <div class="row">
         <p class="mt-5 text-center fw-bold">
             Welcome to CarpenterTrack, you order we deliver instannly.
         </p>
     </div>
 </section>
-<section>
+<section class="products" id="products">
     <h4 class="text-center">Our Products</h4>
     <div class="row">
         {% for product in products %}
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                    <p class="card-text">${{ product.price }}</p>
-                    <a href="{% url 'place_order' %}" class="btn btn-primary m-2 w-100">Order</a>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="#" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                        <p class="fw-bold text-primary">${{ product.price }}</p>
+                        <a href="{% url 'place_order' %}" class="btn btn-primary w-100">Order</a>
+                    </div>
                 </div>
             </div>
-        </div>
         {% empty %}
             <p class="text-center" style="font-style: oblique; color: #ccc;">
                 No products in the moment.
@@ -55,7 +54,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Message</label>
-                    <input type="text" name="message" id="message" class="form-control" placeholder="Enter your message here..." required>
+                    <textarea name="message" id="message" rows="3" class="form-control" placeholder="Enter your message here..." required></textarea>
                 </div>
                 <button type="submit" class="text-center btn btn-primary w-100">Submit</button>
             </form>

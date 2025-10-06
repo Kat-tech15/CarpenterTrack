@@ -19,9 +19,9 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#home{% url 'view_products' %}">Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#home{% url 'contact' %}">Contact Us</a></li>
                 </ul>
             </div>
         </div>  
@@ -33,7 +33,7 @@
         <div class="container text-center">
             <p class="mb-0">&copy; 2025 CarpenterTrack. All Rights Reserved.</p>
             <a href="#" class="text-white me-3">Privacy Policy</a>
-            <a href="{% url 'contact' %}" class="text-white">Contact Us</a>
+            <a href="#home{% url 'contact' %}" class="text-white">Contact Us</a>
         </div>
     </footer>
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js'%}"></script>
@@ -54,6 +54,7 @@
         .form-control::placeholder {
             color: #aaa;
             opacity : 0.7;
+            font-style: italic;
         }
         h4 {
             color: cadetblue;
