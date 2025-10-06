@@ -20,6 +20,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
                 </ul>
             </div>
@@ -53,6 +54,11 @@
         .form-control::placeholder {
             color: #aaa;
             opacity : 0.7;
+        }
+        h4 {
+            color: cadetblue;
+            text-align: center;
+            font-style: oblique;
         }
     </style>
 </body>

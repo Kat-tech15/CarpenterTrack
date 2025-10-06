@@ -12,7 +12,6 @@ def place_order(request):
         deposit = request.POST.get('deposit')
 
         product = Product.objects.get(name=product_name)
-
         profile = Profile.objects.get(user=request.user)    
 
         Order.objects.create(
@@ -24,10 +23,16 @@ def place_order(request):
         messages.success(request, "Order placed successfully!")
         return redirect('place_order')
     products = Product.objects.all()
-    return render(request, 'orders/place_order.html')
+    return render(request, 'orders/place_order.html', {'products':products})
 
 def cancel_order(request):
     return render(request, 'orders/cancel_order.html')
 
 def edit_order(request):
     return render(request, 'orders/edit_order.htm')
+
+def my_orders(request):
+    
+    orders = Order.objects.all()
+
+    return render(request, 'orders/my_orders.html', {'orders': orders})

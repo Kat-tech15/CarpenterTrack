@@ -21,7 +21,7 @@ def upload_product(request):
 
 def view_products(request):
       
-    products = Product.objects.all().order_by('-id')[:5]
+    products = Product.objects.all().order_by('-id')
 
     return render(request, 'products/view_products.html',{'products':products})
 

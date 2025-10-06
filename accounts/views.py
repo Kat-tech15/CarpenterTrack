@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.models  import User
 from .models import Contact
 
+def home(request):
+
+    return render(request, 'home.html')
+    
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -76,6 +80,4 @@ def contact(request):
         )
         messages.success(request, "Message submitted successfully!")
         return redirect('contact')
-        
-
     return render(request, 'accounts/contact.html')

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container bg-skyblue">
+    
+</div>
+<section class="text-center">
+    <div class="row">
+        <p class="mt-5 text-center fw-bold">
+            Welcome to CarpenterTrack, you order we deliver instannly.
+        </p>
+    </div>
+</section>
+<section>
+    <h4 class="text-center">Our Products</h4>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                    <p class="card-text">${{ product.price }}</p>
+                    <a href="{% url 'place_order' %}" class="btn btn-primary m-2 w-100">Order</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-center" style="font-style: oblique; color: #ccc;">
+                No products in the moment.
+            </p>
+        {% endfor %}
+    </div>
+</section>
+<section class="contact" id="contact">
+    <div class="container d-flex justify-content-center">
+        <div class="card shadow-lg p-4" style="border-radius: 15px; width: 400px;">
+            <h4>Contact Us</h4>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter Your name here" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="example@gmail.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <input type="text" name="message" id="message" class="form-control" placeholder="Enter your message here..." required>
+                </div>
+                <button type="submit" class="text-center btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

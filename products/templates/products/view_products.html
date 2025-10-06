@@ -11,7 +11,7 @@
                     <p class="card-text">A study table made from hardwood.</p>
                     <p class="fw-bold text-primary">$25</p>
                 </div>
-                <a class="btn btn-primary m-2" href="{% url 'upload_product' %}">Order</a>
+                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -22,7 +22,7 @@
                     <p class="card-text">A 5 by 6 bed.</p>
                     <p class="fw-bold text-primary">$45</p>
                 </div>
-                <a class="btn btn-primary m-2" href="{% url 'upload_product' %}">Order</a>
+                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -33,7 +33,7 @@
                     <p class="card-text">A 3 seater sofaset.</p>
                     <p class="fw-bold text-primary">$100</p>
                 </div>
-                <a class="btn btn-primary m-2" href="{% url 'upload_product' %}">Order</a>
+                <a class="btn btn-primary m-2" href="{% url 'place_order' %}">Order</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -48,5 +48,25 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="#" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                        <p class="fw-bold text-primary">${{ product.price }}</p>
+                        <a href="{% url 'place_order' %}" class="btn btn-primary m-2 w-100">Order</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center" style="font-style: oblique; color: #ccc;">
+                No products in the moment.
+            </p>
+        {% endfor %}
+    </div>
 </div>
+
 {% endblock %}
