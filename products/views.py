@@ -8,14 +8,16 @@ def upload_product(request):
         name = request.POST.get('name')
         description = request.POST.get('description')
         price = request.POST.get('price')
+        image = request.FILES.get('image')
 
         Product.objects.create(
             name=name,
             description=description,
             price=price,
+            image=image
         )
         messages.success(request, "Product uploaded successfully!")
-        return redirect('upload_product')
+        return redirect('view_products')
 
     return render(request, 'products/upload_product.html')
 

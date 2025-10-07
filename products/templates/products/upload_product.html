@@ -11,12 +11,12 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input name="image" id="image" class="form-control" placeholder="Enter the image of your product">
+                <input type="file" name="image" id="image" class="form-control" accept="ïmage/*" placeholder="Enter the image of your product">
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Product name</label>
