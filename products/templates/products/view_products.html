@@ -4,60 +4,25 @@
 
 <div class="container mt-5">
     <h4 class="mb-4 text-center" style="color: cadetblue; font-style: oblique;">Available Products</h4>
-
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="{% static 'images/table1.webp' %}" class="card-img-top" alt="Sofa">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Classic Sofa</h5>
-                    <p class="card-text">A comfortable 3-seater wooden sofa with premium finish.</p>
-                    <p class="fw-bold text-primary">$180</p>
-                    <a href="{% url 'place_order' %}" class="btn btn-primary w-100">Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="{% static 'images/sofa2.webp' %}" class="card-img-top" alt="Wooden Table">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Wooden Dining Table</h5>
-                    <p class="card-text">Spacious table made from mahogany wood with a natural finish.</p>
-                    <p class="fw-bold text-primary">$120</p>
-                    <a href="{% url 'place_order' %}" class="btn btn-primary w-100">Order</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="{% static 'images/sofa1.webp' %}" class="card-img-top" alt="Wardrobe">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Wardrobe Cabinet</h5>
-                    <p class="card-text">Two-door wardrobe with hanging space and drawers.</p>
-                    <p class="fw-bold text-primary">$150</p>
-                    <a href="{% url 'place_order' %}" class="btn btn-primary w-100">Order</a>
-                </div>
-            </div>
-        </div> 
-    </div>
     <div class="row mt-4">
         {% for product in products %}
             <div class="col-md-4 g-4">
-                <div class="card shadow-sm">
-                    <img src="{{ product.image }}" alt="{{ product.name}}" class="card-img-top">
+                <div class="card h-100 shadow-sm">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name}}" class="card-img-top">
+                    {% else %}
+                        <img src="#" class="card-img-top" alt="No image availble"> 
+                    {% endif %}   
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                         <p class="fw-bold text-primary">${{ product.price }}</p>
-                        <a href="{% url 'place_order' %}" class="btn btn-primary w-100">Order</a>
+                        <a href="{% url 'place_order' product.id %}" class="btn btn-primary w-100">Order</a>
                     </div>
                 </div>
             </div>
         {% endfor %}    
     </div>
-
-    
 </div>
 
 {% endblock %}
