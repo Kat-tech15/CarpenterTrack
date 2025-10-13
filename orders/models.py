@@ -13,6 +13,7 @@ class Order(models.Model):
         ('pending', 'Pending'),
         ('partial', 'Partially Paid'),
         ('paid', 'Fully Paid'),
+        ('cancelled', 'Cancelled'),
     ], 
     default='Pending')
     is_customer_order = models.BooleanField(default=False)

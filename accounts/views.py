@@ -3,19 +3,22 @@ from django.contrib.auth import get_user_model, logout, login, authenticate
 from django.contrib import messages
 from django.contrib.auth.models  import User
 from .models import Contact
+from products.models import Product
+from datetime import datetime
 
 def home(request):
+    featured_products = Product.objects.all()[:8]
 
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'featured_products': featured_products, 'year': datetime.now().year})
     
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        password2 = request.POST.get("password2")
+        password1 = request.POST.get("password1")
 
-        if password != password2:
+        if password != password1:
             messages.error(request, "Passwords do not match.")
             return redirect('register')
         
@@ -23,7 +26,7 @@ def register(request):
             messages.error(request, "Username already exists")
             return redirect("register")
         
-        user = User.objects.create_user(username=username, email=email, password=password1)
+        user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
         messages.success(request, "Registration successful.")
         return redirect('login')  

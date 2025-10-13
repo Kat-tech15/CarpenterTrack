@@ -5,7 +5,7 @@ from . models import Order
 from accounts.models import Profile
 from products.models import Product 
 
-
+@login_required
 def place_order(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
@@ -52,17 +52,39 @@ def place_order(request, product_id):
     products = Product.objects.all()
     return render(request, 'orders/place_order.html', {'products': products})
 
-def cancel_order(request):
-    order  = Order.objects.all().order_by('-id')
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
-    messages.success(request, "Order cancelled successfully!")
-    return render(request, 'orders/cancel_order.html')
+    if request.method == "POST":
+        order.status = 'Cancelled'
+        #order.delete()  # Optional: If you want to delete the order instead of marking it as cancelled
+        order.save()
+        messages.success(request, "Order cancelled successfully.")
+        return redirect('my_orders')
+    
+    return render(request, 'orders/cancel_order.html', {'order': order})
 
-def edit_order(request):
-    order = Order.objects.all()
+def edit_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
-    return render(request, 'orders/edit_order.html')  
+    if request.method == "POST":
+        new_quantity = int(request.POST.get('quantity', order.quantity))
+        new_deposit = float(request.POST.get('deposit', order.deposit))
 
+        order.quantity = new_quantity
+        order.deposit = new_deposit
+        if order.product:
+            order.total_price = order.product.price * new_quantity
+        
+        order.save()
+
+        messages.success(request, "Order updaed successfully!")
+        return redirect('my_orders')
+
+
+    return render(request, 'orders/edit_order.html', {'order': order})  
+
+@login_required
 def my_orders(request):
     profile = Profile.objects.get(user=request.user)
     orders = Order.objects.filter(customer=profile).order_by('-created_at') 

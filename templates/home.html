@@ -1,50 +1,104 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="container">
-</div>
-<section class="home text-center" id="home">
-    <div class="row">
-        <p class="mt-5 text-center fw-bold">
-            Welcome to CarpenterTrack, you order we deliver instannly.
-        </p>
+<section class="hero bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Welcome to CarpenterTrack</h1>
+        <p class="lead mb-4">Your trusted platform for custom carpentry and seamless order traclking.</p>
+        <a href="{% url 'view_products'%}" class="btn btn-primary btn-lg">Explore Products</a>
     </div>
 </section>
-<section>
-    <div class="container mt-5">
-    <h4 class="mb-4 text-center" style="color: cadetblue; font-style: oblique;">Available Products</h4>
-    <div class="row mt-4">
-        {% for product in products %}
-            <div class="col-md-4 g-4">
-                <div class="card h-100 shadow-sm">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name}}" class="card-img-top">
-                    {% else %}
-                        <img src="#" class="card-img-top" alt="No image availble"> 
-                    {% endif %}   
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                        <p class="fw-bold text-primary">${{ product.price }}</p>
-                        <a href="{% url 'order' product.id %}" class="btn btn-primary w-100">Order</a>
-                    </div>
+<section class="container mt-5">
+    <h4>Feartured Products</h4>
+    <div class="row">
+        {% for product in featured_products %}
+        <div class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;">
+                {% endif %}                
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.price }}</p>
+                    <a href="{% url 'place_order' product.id %}" class="btn btn-outline-primary">Shop Now</a>
                 </div>
             </div>
-        {% endfor %}    
+        </div>
+        {% empty %}
+        <p class="text-center">No products available at the moment.</p>
+        {% endfor %}
     </div>
-</div>
 </section>
-<section class="contact" id="contact">
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h4>How It Works</h4>
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="p-3">
+                    <h5>1. Browse Products</h5>
+                    <p>Explore our range of handcrafted furniture and custom designs</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <h5>2. Place Order</h5>
+                    <p>Select what you need and make your order with a small deposit</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <h5>3. Track Progress</h5>
+                    <p>Log in anytime to view your order status and payments.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <h5>4. Receive Delivery</h5>
+                    <p>Your order will be delivered upon completion and full payment.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container py-5">
+    <h4>About CarpenterTrack</h4>
+    <p class="lead tecxt-center">
+        CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture.
+        We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
+    </p>
+</section>
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h4>What Our Clients Say</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"Excellent workmanship and timely delivery!"</p>
+                    <footer class="blockquote-footer">John M.</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"Very transparent - I could track my order progress easily."</p>
+                    <footer class="blockquote-footer">Mary .K</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"Affordable and beautiful furniture, highly recommend!"</p>
+                    <footer class="blockquote-footer">Kevin O.</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light text-light py-5">
+    <h4>Contact Us</h4>
     <div class="container d-flex justify-content-center">
         <div class="card shadow-lg p-4" style="border-radius: 15px; width: 400px;">
-            <h4>Contact Us</h4>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <form method="POST">
+            <form method="POST" action="{% url 'contact' %}">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
