@@ -5,8 +5,11 @@ from . models import Order
 from accounts.models import Profile
 from products.models import Product 
 
-@login_required
+@login_required(login_url='login')
 def place_order(request, product_id):
+    if not request.is_authenticated:
+        return redirect('login')
+
     product = get_object_or_404(Product, id=product_id)
 
     if request.method == "POST":
@@ -86,6 +89,9 @@ def edit_order(request, order_id):
 
 @login_required
 def my_orders(request):
+    if not user.is_aunthenticated:
+        return redrect('login')
+        
     profile = Profile.objects.get(user=request.user)
     orders = Order.objects.filter(customer=profile).order_by('-created_at') 
 

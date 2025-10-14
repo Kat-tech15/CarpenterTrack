@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} CarpenterTrack|Home {% endblock %}
 {% block content %}
-<section class="hero bg-light text-center py-5">
+<section class="hero bg-light text-center py-5 mt-5" id="hero">
     <div class="container">
         <h1 class="display-4 fw-bold">Welcome to CarpenterTrack</h1>
         <p class="lead mb-4">Your trusted platform for custom carpentry and seamless order traclking.</p>
         <a href="{% url 'view_products'%}" class="btn btn-primary btn-lg">Explore Products</a>
     </div>
 </section>
-<section class="container mt-5">
+<section class="container mt-5" id="products">
     <h4>Feartured Products</h4>
     <div class="row">
         {% for product in featured_products %}
@@ -21,8 +22,8 @@
                 {% endif %}                
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.price }}</p>
-                    <a href="{% url 'place_order' product.id %}" class="btn btn-outline-primary">Shop Now</a>
+                    <p class="fw-bold text-primary">${{ product.price }}</p>
+                    <a href="{% url 'place_order' product.id %}" class="btn btn-primary w-100">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@
         {% endfor %}
     </div>
 </section>
-<section class="bg-light py-5">
+<section class="bg-light py-5 mt-5" id="works">
     <div class="container text-center">
         <h4>How It Works</h4>
         <div class="row mt-4">
@@ -62,14 +63,14 @@
         </div>
     </div>
 </section>
-<section class="container py-5">
+<section class="container py-5 mt-5" id="about">
     <h4>About CarpenterTrack</h4>
     <p class="lead tecxt-center">
         CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture.
         We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
     </p>
 </section>
-<section class="bg-light py-5">
+<section class="bg-light py-5 mt-5" id="testimonials">
     <div class="container text-center">
         <h4>What Our Clients Say</h4>
         <div class="row">
@@ -94,7 +95,7 @@
         </div>
     </div>
 </section>
-<section class="bg-light text-light py-5">
+<section class="bg-light text-light py-5 mt-5" id="contact">
     <h4>Contact Us</h4>
     <div class="container d-flex justify-content-center">
         <div class="card shadow-lg p-4" style="border-radius: 15px; width: 400px;">

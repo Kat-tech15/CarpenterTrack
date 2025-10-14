@@ -1,29 +1,12 @@
 {%extends 'base.html' %}
 {% block content %}
-<div class="logout-container">
-    <form method="post" action="">
-        {% csrf_token %}
-        <p>We regret seeing you leave😢</p>
-        <button type="submit">Logout</button>
-        <li><a href="{% url 'login'%}"></a>Login</li>
-    </form>
+<div class="container text-center py-5">
+    <h3 class="mb-4 text-danger">We regret to see you leave 😔</h3>
+    <p class="mb-5">You'have been logged out. We hope to see you again soon!</p>
+
+    <div>
+        <a href="{% url 'login' %}" class="btn btn-primary me-2">Login</a>  
+        </a><a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+    </div>
 </div>
-<style>
-    .logout-container {
-        background-color: aliceblue;
-        text-align: center;
-        border-radius: 5px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        width: 400px;
-        margin: auto;
-    }
-    .logout-container button {
-        background-color: #3ca5d6;
-        border-radius: 50px;
-        border: none;
-        padding: 15px;
-        color: white;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-</style>
 {% endblock %}
