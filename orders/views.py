@@ -1,14 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from . models import Order
 from accounts.models import Profile
 from products.models import Product 
 
 @login_required(login_url='login')
 def place_order(request, product_id):
-    if not request.is_authenticated:
-        return redirect('login')
 
     product = get_object_or_404(Product, id=product_id)
 
@@ -55,6 +53,7 @@ def place_order(request, product_id):
     products = Product.objects.all()
     return render(request, 'orders/place_order.html', {'products': products})
 
+@login_required(login_url='login')
 def cancel_order(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
@@ -67,6 +66,7 @@ def cancel_order(request, order_id):
     
     return render(request, 'orders/cancel_order.html', {'order': order})
 
+@login_required(login_url='login')
 def edit_order(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
@@ -87,12 +87,24 @@ def edit_order(request, order_id):
 
     return render(request, 'orders/edit_order.html', {'order': order})  
 
-@login_required
+@login_required(login_url='login')
 def my_orders(request):
-    if not user.is_aunthenticated:
-        return redrect('login')
         
     profile = Profile.objects.get(user=request.user)
     orders = Order.objects.filter(customer=profile).order_by('-created_at') 
 
     return render(request, 'orders/my_orders.html', {'orders': orders})
+
+@user_passes_test(lambda u: u.is_superuser)
+def update_order_status(request, order_id, status):
+    order = get_object_or_404(Order, id=order_id)
+    order.status = status
+    order.save()
+    return redirect('admin_orders')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_orders(request, order_id, status):
+    all_orders = Order.objects.all()
+
+    return render(request, 'orders/all_orders.html', {'all_orders':all_orders})

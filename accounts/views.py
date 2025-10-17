@@ -18,9 +18,7 @@ def register(request):
         password = request.POST.get("password")
         password1 = request.POST.get("password1")
 
-        if password != password1:
-            messages.error(request, "Passwords do not match.")
-            return redirect('register')
+        
         
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
@@ -39,7 +37,7 @@ def login(request):
         password = request.POST.get("password")
 
         user = authenticate(request, email=email, password=password)
-        if user is not None:
+        if user:
             login(request, user)
             messages.success(request, "Login successful.")
             return redirect("home")

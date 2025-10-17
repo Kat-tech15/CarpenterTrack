@@ -2,14 +2,21 @@
 {% load static %}
 {% block title %} CarpenterTrack|Home {% endblock %}
 {% block content %}
-<section class="hero bg-light text-center py-5 mt-5" id="hero">
+<section class="hero bg-light text-center py-5" id="hero">
     <div class="container">
         <h1 class="display-4 fw-bold">Welcome to CarpenterTrack</h1>
         <p class="lead mb-4">Your trusted platform for custom carpentry and seamless order traclking.</p>
         <a href="{% url 'view_products'%}" class="btn btn-primary btn-lg">Explore Products</a>
     </div>
 </section>
-<section class="container mt-5" id="products">
+<section class="container py-5 mt-5" id="about">
+    <h4>About Us</h4>
+    <p class="lead tecxt-center">
+        CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture.
+        We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
+    </p>
+</section>
+<section class="container" id="products">
     <h4>Feartured Products</h4>
     <div class="row">
         {% for product in featured_products %}
@@ -23,7 +30,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="fw-bold text-primary">${{ product.price }}</p>
-                    <a href="{% url 'place_order' product.id %}" class="btn btn-primary w-100">Shop Now</a>
+                    <a href="{% url 'place_order' product.id %}" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -32,70 +39,35 @@
         {% endfor %}
     </div>
 </section>
-<section class="bg-light py-5 mt-5" id="works">
-    <div class="container text-center">
-        <h4>How It Works</h4>
-        <div class="row mt-4">
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h5>1. Browse Products</h5>
-                    <p>Explore our range of handcrafted furniture and custom designs</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h5>2. Place Order</h5>
-                    <p>Select what you need and make your order with a small deposit</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h5>3. Track Progress</h5>
-                    <p>Log in anytime to view your order status and payments.</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h5>4. Receive Delivery</h5>
-                    <p>Your order will be delivered upon completion and full payment.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="container py-5 mt-5" id="about">
-    <h4>About CarpenterTrack</h4>
-    <p class="lead tecxt-center">
-        CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture.
-        We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
-    </p>
-</section>
-<section class="bg-light py-5 mt-5" id="testimonials">
+<section class="bg-light py-5" id="testimonials">
     <div class="container text-center">
         <h4>What Our Clients Say</h4>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="gap-2 row">
+            <div class="card shadow-sm col-md-3">
                 <blockquote class="blockquote">
                     <p>"Excellent workmanship and timely delivery!"</p>
-                    <footer class="blockquote-footer">John M.</footer>
+                    <img src="static/images/pic1.jpg" class="card-image-top" alt="" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                    <footer class="blockquote-footer mt-2">John M.</footer>
                 </blockquote>
             </div>
-            <div class="col-md-4">
+            <div class="card shadow-sm col-md-3">
                 <blockquote class="blockquote">
                     <p>"Very transparent - I could track my order progress easily."</p>
-                    <footer class="blockquote-footer">Mary .K</footer>
+                    <img src="static/images/pic2.jpg" class="card-image-top" alt="" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                    <footer class="blockquote-footer mt-2">Hary .K</footer>
                 </blockquote>
             </div>
-            <div class="col-md-4">
+            <div class="card shadow-sm col-md-3">
                 <blockquote class="blockquote">
                     <p>"Affordable and beautiful furniture, highly recommend!"</p>
-                    <footer class="blockquote-footer">Kevin O.</footer>
+                    <img src="static/images/pic3.jpg" class="card-image-top" alt="" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                    <footer class="blockquote-footer mt-2">Kevin O.</footer>
                 </blockquote>
             </div>
         </div>
     </div>
 </section>
-<section class="bg-light text-light py-5 mt-5" id="contact">
+<section class="bg-light text-light py-5" id="contact">
     <h4>Contact Us</h4>
     <div class="container d-flex justify-content-center">
         <div class="card shadow-lg p-4" style="border-radius: 15px; width: 400px;">
