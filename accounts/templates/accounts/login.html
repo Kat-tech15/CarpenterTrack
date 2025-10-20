@@ -6,9 +6,9 @@
         <form method="POST">
             {% csrf_token %}
             <div class="mb-3 input-icon">
-                <label for="email" class="fomr-label visually-hidden ">Email</label>
+                <label for="username" class="fomr-label visually-hidden ">Username</label>
                 <i class="bi bi-envelope"></i>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email to login" required>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username to login" required>
             </div>
 
             <div class="mb-3 input-icon">

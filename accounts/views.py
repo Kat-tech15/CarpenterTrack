@@ -31,13 +31,13 @@ def register(request):
 
     return render(request, 'accounts/register.html')
 
-def login(request):
+def login_view(request):
     if request.method == "POST":
-        email = request.POST.get("email")
+        username = request.POST.get("username")
         password = request.POST.get("password")
 
-        user = authenticate(request, email=email, password=password)
-        if user:
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
             login(request, user)
             messages.success(request, "Login successful.")
             return redirect("home")

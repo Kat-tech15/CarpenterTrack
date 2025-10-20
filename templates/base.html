@@ -36,7 +36,7 @@
                             {% if user.is_authenticated %}
                                 <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
                             {% else %}
-                                <li><a href="{% url 'login' %}" class="dropdown-item">Login</a></li>
+                                <li><a href="{% url 'login_view' %}" class="dropdown-item">Login</a></li>
                                 <li><a href="{% url 'register' %}" class="dropdown-item">Register</a></li>
                             {% endif %}
                         </ul>
@@ -91,7 +91,7 @@
             bottom: 15px;
             right: 15px;
             background: #188488;
-            color: #ffffff;
+            color: #17e217ff;
             width: 40px;
             height: 40px;
             border-radius: 60%;

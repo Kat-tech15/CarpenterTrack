@@ -1,6 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-5">
-    table.
+    <h2 class="mb-4 text-center">Manage Customers Orders</h2>
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Amount Paid</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in all_orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.customer.username }}</td>
+                <td>{{ order.product.name }}</td>
+                <td>{{ order.product.quantity }}</td>
+                <td>{{ order.amout_paid }}</td>
+                <td>
+                    <span class="bange
+                        {% if order.status == 'Pending' %} bg-secondary
+                        {% elif order .status == 'Approved' %} bg-success 
+                        {% elif order.status == 'In Progress' %} bg-warning text-dark
+                        {% elif order.status == 'Completed' %} bg-primary
+                        {% elif order.status == 'Cancelled' %} bg-danger 
+                        {% endif %}
+                        ">
+                        {{ order.status }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'update_order_status' order.id 'Approved' %}" class=""></a>
+                    <a href="{% url 'update_order_status' order.id 'In Progress' %}" class=""></a>
+                    <a href="{% url 'update_order_status' order.id 'Completed' %}" class=""></a>
+                    <a href="{% url 'update_order_status' order.id 'Cancelled' %}" class=""></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 {% endblock %}
