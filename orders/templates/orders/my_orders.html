@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <div class="container mt-5">
   <h4 class="text-center mb-4" style="font-style: oblique; color: steelblue;">My Orders</h4>
@@ -6,13 +7,13 @@
     {% for order in orders %}
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
-          {% if order.product %}
-            <img src="{{ order.product.image.url }}" class="card-img-top" alt="{{ order.product.name }}">
-          {% elif order.refrence_image %}
-            <img src="{{ order.refrence_image.url }}" class="card-img-top" alt="Custom Order Image">
-          {% else %}
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image">
-          {% endif %}
+            {% if order.product %}
+              <img src="{{ order.product.image.url }}" class="card-img-top" alt="{{ order.product.name }}">
+            {% elif order.refrence_image %}
+              <img src="{{ order.refrence_image.url }}" class="card-img-top" alt="Custom Order Image">
+            {% else %}
+              <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image">
+            {% endif %}
 
           <div class="card-body">
             {% if order.product %}
@@ -38,8 +39,8 @@
           </div>
 
           <div class="card-footer d-flex justify-content-between">
-            <a href="{% url 'edit_order' %}" class="btn btn-outline-secondary btn-sm">Edit</a>
-            <a href="{% url 'cancel_order' %}" class="btn btn-outline-danger btn-sm">Cancel</a>
+            <a href="{% url 'edit_order' order.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+            <a href="{% url 'cancel_order' order.id %}" class="btn btn-outline-danger btn-sm">Cancel</a>
           </div>
         </div>
       </div>

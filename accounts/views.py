@@ -27,7 +27,7 @@ def register(request):
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
         messages.success(request, "Registration successful.")
-        return redirect('login')  
+        return redirect('login_view')  
 
     return render(request, 'accounts/register.html')
 
@@ -43,12 +43,12 @@ def login_view(request):
             return redirect("home")
         else:
             messages.error(request, "Invalid email or password.")
-            return redirect("login")
+            return redirect("login_view")
         
     return render(request, 'accounts/login.html')
 
 
-def logout(request):
+def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out")
     return render(request, 'accounts/logout.html')

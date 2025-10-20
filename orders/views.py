@@ -5,13 +5,15 @@ from . models import Order
 from accounts.models import Profile
 from products.models import Product 
 
-@login_required(login_url='login')
+@login_required(login_url='login_view')
 def place_order(request, product_id):
 
-    product = get_object_or_404(Product, id=product_id)
+    product = None
+    if product_id:
+        product = get_object_or_404(Product, id=product_id)
 
     if request.method == "POST":
-        product_id = request.POST.get('product_id')
+        posted_product_id = request.POST.get('product_id')
         quantity = int(request.POST.get('quantity',1))
         deposit = float(request.POST.get('deposit',0))
         custom_description = request.POST.get('custom_description', '')
@@ -19,7 +21,7 @@ def place_order(request, product_id):
 
         profile = Profile.objects.get(user=request.user) 
 
-        if product_id and product_id != "":
+        if posted_product_id and posted_product_id != "":
             try: 
                 product = Product.objects.get(id=product_id)
                 total_price = float(product.price) * quantity
@@ -34,7 +36,17 @@ def place_order(request, product_id):
             except Product.DoesNotExist:
                 messages.error(request, "Selected product was not found.")
                 return redirect('place_order', product_id=product_id)
-            
+        elif product:
+            total_price = float(product.price) * quantity
+            order = Order.objects.create(
+                customer=profile,
+                product=product,
+                quantity=quantity,
+                deposit=deposit,
+                total_price=total_price,
+                is_customer_order=False
+
+            )
         else:
             order = Order.objects.create(
                     customer=profile,
@@ -53,7 +65,7 @@ def place_order(request, product_id):
     products = Product.objects.all()
     return render(request, 'orders/place_order.html', {'products': products})
 
-@login_required(login_url='login')
+@login_required(login_url='login_view')
 def cancel_order(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
@@ -66,7 +78,7 @@ def cancel_order(request, order_id):
     
     return render(request, 'orders/cancel_order.html', {'order': order})
 
-@login_required(login_url='login')
+@login_required(login_url='login_view')
 def edit_order(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
@@ -87,7 +99,7 @@ def edit_order(request, order_id):
 
     return render(request, 'orders/edit_order.html', {'order': order})  
 
-#@login_required(login_url='login')
+@login_required(login_url='login_view')
 def my_orders(request):
         
     profile = Profile.objects.get(user=request.user)
@@ -100,11 +112,12 @@ def update_order_status(request, order_id, status):
     order = get_object_or_404(Order, id=order_id)
     order.status = status
     order.save()
+    messages.success(request, f"Order #{order.id} status updated to '{status}'.")
     return redirect('admin_orders')
 
 
 #@user_passes_test(lambda u: u.is_superuser)
 def admin_orders(request):
-    all_orders = Order.objects.all()
+    all_orders = Order.objects.all().order_by('-id')
 
     return render(request, 'orders/all_orders.html', {'all_orders':all_orders})

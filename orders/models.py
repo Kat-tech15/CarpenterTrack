@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 from accounts.models import Profile
 from products.models import Product
 
@@ -22,9 +23,15 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *rgs, **kwargs):
+
+        if not isinstance(self.total_price, Decimal):
+            self.total_price = Decimal(str(self.total_price or 0))
+        if not isinstance(self.deposit, Decimal):
+            self.deposit = Decimal(str(self.deposit or 0))
+
         self.balance = self.total_price - self.deposit
 
-        if self.deposit <= 0:
+        if self.deposit <= Decimal('0.00'):
             self.status = 'pending'
         elif self.deposit < self.total_price:
             self.status = 'partial'
