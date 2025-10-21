@@ -42,7 +42,7 @@ def login_view(request):
             messages.success(request, "Login successful.")
             return redirect("home")
         else:
-            messages.error(request, "Invalid email or password.")
+            messages.error(request, "Invalid username or password.")
             return redirect("login_view")
         
     return render(request, 'accounts/login.html')

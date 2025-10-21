@@ -1,52 +1,39 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container mt-5">
-  <h4 class="text-center mb-4" style="font-style: oblique; color: steelblue;">My Orders</h4>
-  <div class="row">
-    {% for order in orders %}
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm h-100">
-            {% if order.product %}
-              <img src="{{ order.product.image.url }}" class="card-img-top" alt="{{ order.product.name }}">
-            {% elif order.refrence_image %}
-              <img src="{{ order.refrence_image.url }}" class="card-img-top" alt="Custom Order Image">
-            {% else %}
-              <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image">
-            {% endif %}
+    <h4 class="text-center mb-4" style="font-style: oblique; color: steelblue;">My Orders</h4>
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-">
+                {% if order.product %}
+                <img src="{{ order.product.image.url }}" class="card-img-top p-1" alt="{{ order.product.name }}"> {% elif order.refrence_image %}
+                <img src="{{ order.refrence_image.url }}" class="card-img-top" alt="Custom Order Image"> {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image"> {% endif %}
 
-          <div class="card-body">
-            {% if order.product %}
-              <h5 class="card-title">{{ order.product.name }}</h5>
-              <p class="card-text">{{ order.product.description|truncatechars:80 }}</p>
-            {% else %}
-              <h5 class="card-title">Custom Order</h5>
-              <p class="card-text">{{ order.custom_description|truncatechars:80 }}</p>
-            {% endif %}
+                <div class="card-body text-center">
+                    <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                    <p><strong>Total Price:</strong> Ksh {{ order.total_price }}</p>
+                    <p><strong>Deposit Paid:</strong> Ksh {{ order.deposit }}</p>
+                    <p><strong>Balance:</strong> Ksh {{ order.balance }}</p>
 
-            <p><strong>Quantity:</strong> {{ order.quantity }}</p>
-            <p><strong>Total Price:</strong> Ksh {{ order.total_price }}</p>
-            <p><strong>Deposit Paid:</strong> Ksh {{ order.deposit }}</p>
-            <p><strong>Balance:</strong> Ksh {{ order.balance }}</p>
+                    {% if order.status == 'pending' %}
+                    <span class="badge bg-warning text-dark">Pending</span> {% elif order.status == 'partial' %}
+                    <span class="badge bg-info text-dark">Partially Paid</span> {% else %}
+                    <span class="badge bg-success">Fully Paid</span> {% endif %}
+                </div>
 
-            {% if order.status == 'pending' %}
-              <span class="badge bg-warning text-dark">Pending</span>
-            {% elif order.status == 'partial' %}
-              <span class="badge bg-info text-dark">Partially Paid</span>
-            {% else %}
-              <span class="badge bg-success">Fully Paid</span>
-            {% endif %}
-          </div>
-
-          <div class="card-footer d-flex justify-content-between">
-            <a href="{% url 'edit_order' order.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
-            <a href="{% url 'cancel_order' order.id %}" class="btn btn-outline-danger btn-sm">Cancel</a>
-          </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{% url 'edit_order' order.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                    <a href="{% url 'cancel_order' order.id %}" class="btn btn-outline-danger btn-sm">Cancel</a>
+                </div>
+            </div>
         </div>
-      </div>
-    {% empty %}
-      <p class="text-center text-muted">You haven’t made any orders yet.</p>
-    {% endfor %}
-  </div>
+        {% empty %}
+        <p class="text-center text-muted">You haven’t made any orders yet.</p>
+        {% endfor %}
+    </div>
+    <ul>
+        <a class="justify-content-center btn btn-primary" href="{% url  'view_products' %}">View Products</a>
+    </ul>
 </div>
 {% endblock %}

@@ -71,7 +71,7 @@ def cancel_order(request, order_id):
 
     if request.method == "POST":
         order.status = 'Cancelled'
-        #order.delete()  # Optional: If you want to delete the order instead of marking it as cancelled
+        order.delete()  # Optional: If you want to delete the order instead of marking it as cancelled
         order.save()
         messages.success(request, "Order cancelled successfully.")
         return redirect('my_orders')

@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %} CarpenterTrack|Home {% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} CarpenterTrack|Home {% endblock %} {% block content %}
 <section class="hero bg-light text-center py-5" id="hero">
     <div class="container">
         <h1 class="display-4 fw-bold">Welcome to CarpenterTrack</h1>
@@ -9,11 +6,10 @@
         <a href="{% url 'view_products'%}" class="btn btn-primary btn-lg">Explore Products</a>
     </div>
 </section>
-<section class="container py-5 mt-5" id="about">
+<section class="container py-5" id="about">
     <h4>About Us</h4>
     <p class="lead tecxt-center">
-        CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture.
-        We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
+        CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture. We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
     </p>
 </section>
 <section class="container" id="products">
@@ -23,10 +19,8 @@
         <div class="col-md-3">
             <div class="card mb-4 shadow-sm">
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top p-2" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
-                {% else %}
-                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;">
-                {% endif %}                
+                <img src="{{ product.image.url }}" class="card-img-top p-1" alt="{{ product.name }}" style="height: 200px; object-fit: cover;"> {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;"> {% endif %}
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="fw-bold text-primary">${{ product.price }}</p>
@@ -41,32 +35,51 @@
 </section>
 <section class="bg-light py-5" id="testimonials">
     <div class="container text-center">
-        <h4>What Our Clients Say</h4>
-        <div class="gap-2 row">
-            <div class="card shadow-sm col-md-3">
-                <blockquote class="blockquote">
-                    <p>"Excellent workmanship and timely delivery!"</p>
-                    <img src="static/images/pic1.jpg" class="card-image-top" alt="" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
-                    <footer class="blockquote-footer mt-2">John M.</footer>
-                </blockquote>
+        <h4 class="mb-4">What Our Clients Say</h4>
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card shadow-sm h-100 p-3">
+                    <blockquote class="blockquote mb-0">
+                        <p>"Excellent workmanship and timely delivery!"</p>
+                        <img src="{% static 'images/pic1.jpg' %}" alt="John M." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <footer class="blockquote-footer mt-2">John M.</footer>
+                    </blockquote>
+                </div>
             </div>
-            <div class="card shadow-sm col-md-3">
-                <blockquote class="blockquote">
-                    <p>"Very transparent - I could track my order progress easily."</p>
-                    <img src="static/images/pic2.jpg" class="card-image-top" alt="" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
-                    <footer class="blockquote-footer mt-2">Hary .K</footer>
-                </blockquote>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card shadow-sm h-100 p-3">
+                    <blockquote class="blockquote mb-0">
+                        <p>"Very transparent - I could track my order progress easily."</p>
+                        <img src="{% static 'images/pic2.jpg' %}" alt="Hary K." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <footer class="blockquote-footer mt-2">Hary K.</footer>
+                    </blockquote>
+                </div>
             </div>
-            <div class="card shadow-sm col-md-3">
-                <blockquote class="blockquote">
-                    <p>"Affordable and beautiful furniture, highly recommend!"</p>
-                    <img src="static/images/pic3.jpg" class="card-image-top" alt="" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
-                    <footer class="blockquote-footer mt-2">Kevin O.</footer>
-                </blockquote>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card shadow-sm h-100 p-3">
+                    <blockquote class="blockquote mb-0">
+                        <p>"Affordable and beautiful furniture, highly recommend!"</p>
+                        <img src="{% static 'images/pic3.jpg' %}" alt="Kevin O." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <footer class="blockquote-footer mt-2">Kevin O.</footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card shadow-sm h-100 p-3">
+                    <blockquote class="blockquote mb-0">
+                        <p>"They exceeded my expectations — I’ll definitely order again!"</p>
+                        <img src="{% static 'images/pic4.jpg' %}" alt="Mary L." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <footer class="blockquote-footer mt-2">Mary L.</footer>
+                    </blockquote>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
 <section class="bg-light text-light py-5" id="contact">
     <h4>Contact Us</h4>
     <div class="container d-flex justify-content-center">
