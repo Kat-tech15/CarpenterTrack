@@ -1,63 +1,68 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
     <title>FurnitureTrack</title>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm" style="box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm"
+        style="box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">CarpenterTrack</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse text-white" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-3">
-                {% if user.is_superuser %}
+                    {% if user.is_superuser %}
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a href="{% url 'upload_product' %}" class="nav-link">Upload</a></li>
                     <li class="nav-item"><a href="{% url 'admin_orders' %}" class="nav-link">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
-                {% else %} 
+                    {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#products">Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#testimonials">Testimonials</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">My Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li> 
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
                     <li class="nav-item dropdown">
-                        <a href="#" id="userDropdown" class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" id="userDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle fe-5"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-meni" aria-labelledby="userDropdown">
                             {% if user.is_authenticated %}
-                                <li><a class="dropdown-item text-danger" href="{% url 'logout_view' %}">Logout</a></li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'logout_view' %}">Logout</a></li>
                             {% else %}
-                                <li><a href="{% url 'login_view' %}" class="dropdown-item">Login</a></li>
-                                <li><a href="{% url 'register' %}" class="dropdown-item">Register</a></li>
+                            <li><a href="{% url 'login_view' %}" class="dropdown-item">Login</a></li>
+                            <li><a href="{% url 'register' %}" class="dropdown-item">Register</a></li>
                             {% endif %}
                         </ul>
                     </li>
-                {% endif %}
+                    {% endif %}
                 </ul>
             </div>
-        </div>  
+        </div>
     </nav>
     <div class="back-to-top">
         <button id="backToTopBtn" onclick="scrollToTop()">^</button>
     </div>
     {% if messages %}
-        <div class="container mt-5" style="width: fit-content;">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
-                </div>
-            {% endfor %}
+    <div class="container mt-5" style="width: fit-content;">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
     <main class="mt-5 pt-4">
@@ -76,16 +81,19 @@
         html {
             scroll-behavior: smooth;
         }
+
         nav a {
             color: white;
             margin: 0 10px;
             text-decoration: none;
         }
+
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
+
         #backToTopBtn {
             position: fixed;
             bottom: 15px;
@@ -98,38 +106,45 @@
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 2px 20px rgba(0, 0 , 0, 0.3);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
             transition: background 0.3s ease, transform 0.2s ease;
             display: block;
             z-index: 9999;
         }
+
         #backToTopBtn:hover {
             background: #28c2c7;
             transform: scale(1.1);
 
         }
+
         main {
             flex: 1;
         }
+
         footer {
             color: white;
             text-align: center;
             padding: 10px 0;
         }
+
         .form-control::placeholder {
             color: #aaa;
-            opacity : 0.7;
+            opacity: 0.7;
             font-style: italic;
         }
+
         h4 {
             color: cadetblue;
             text-align: center;
             font-style: oblique;
             margin-bottom: 20px;
         }
+
         .alert {
             transition: opacity 0.5s ease-out;
         }
+
         .hero {
             background-image: url(static/images/carpenter.jpg);
             background-repeat: no-repeat;
@@ -146,7 +161,7 @@
             });
         }, 4000);
 
-        window.onscroll = function() {
+        window.onscroll = function () {
             const btn = document.getElementById("backToTopBtn");
             if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
                 btn.style.display = "block";
@@ -155,10 +170,10 @@
             }
         };
         function scrollToTop() {
-            window.scrollTo({ top: 0, behaviour: 'smooth'});
+            window.scrollTo({ top: 0, behaviour: 'smooth' });
         }
     </script>
-    
-</body>
-</html>
 
+</body>
+
+</html>
