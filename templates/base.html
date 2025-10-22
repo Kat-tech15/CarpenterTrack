@@ -6,16 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'bootsrap/icons' %}">
+    <link rel="stylesheet" href="{% static 'bootsrap/fonts' %}">
     <title>FurnitureTrack</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm"
-        style="box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm" style="box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">CarpenterTrack</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse text-white" id="navbarNav">
@@ -33,8 +33,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">My Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
                     <li class="nav-item dropdown">
-                        <a href="#" id="userDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" id="userDropdown" class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle fe-5"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-meni" aria-labelledby="userDropdown">
@@ -81,19 +80,19 @@
         html {
             scroll-behavior: smooth;
         }
-
+        
         nav a {
             color: white;
             margin: 0 10px;
             text-decoration: none;
         }
-
+        
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-
+        
         #backToTopBtn {
             position: fixed;
             bottom: 15px;
@@ -111,42 +110,43 @@
             display: block;
             z-index: 9999;
         }
-
+        
         #backToTopBtn:hover {
             background: #28c2c7;
             transform: scale(1.1);
-
         }
-
+        
         main {
             flex: 1;
         }
+        
         section {
-            scroll-margin-top: 100
+            scroll-margin-top: 100px;
         }
+        
         footer {
             color: white;
             text-align: center;
             padding: 10px 0;
         }
-
+        
         .form-control::placeholder {
             color: #aaa;
             opacity: 0.7;
             font-style: italic;
         }
-
+        
         h4 {
             color: cadetblue;
             text-align: center;
             font-style: oblique;
             margin-bottom: 20px;
         }
-
+        
         .alert {
             transition: opacity 0.5s ease-out;
         }
-
+        
         .hero {
             background-image: url(static/images/carpenter.jpg);
             background-repeat: no-repeat;
@@ -163,7 +163,7 @@
             });
         }, 4000);
 
-        window.onscroll = function () {
+        window.onscroll = function() {
             const btn = document.getElementById("backToTopBtn");
             if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
                 btn.style.display = "block";
@@ -171,11 +171,17 @@
                 btn.style.display = "none";
             }
         };
+
         function scrollToTop() {
-            window.scrollTo({ top: 0, behaviour: 'smooth' });
+            window.scrollTo({
+                top: 0,
+                behaviour: 'smooth'
+            });
         }
     </script>
 
 </body>
+
+</html>
 
 </html>

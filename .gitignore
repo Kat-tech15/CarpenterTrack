@@ -1,4 +1,6 @@
 myenv
-.venv
+.env
 requirements.txt
 db.sqlite3
+staticfiles
+__pycache__
