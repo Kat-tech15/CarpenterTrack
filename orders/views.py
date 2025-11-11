@@ -13,11 +13,11 @@ def place_order(request, product_id):
         product = get_object_or_404(Product, id=product_id)
 
     if request.method == "POST":
-        posted_product_id = request.POST.get('product_id')
         quantity = int(request.POST.get('quantity',1))
         deposit = float(request.POST.get('deposit',0))
         custom_description = request.POST.get('custom_description', '')
         refrence_image = request.POST.get('refrence_image')
+        selected_peoduct_id = request.POST.get('product_id')
 
         profile = Profile.objects.get(user=request.user) 
 
@@ -25,6 +25,7 @@ def place_order(request, product_id):
             try: 
                 product = Product.objects.get(id=product_id)
                 total_price = float(product.price) * quantity
+
                 order = Order.objects.create(
                         customer=profile,
                         product=product,
@@ -36,20 +37,11 @@ def place_order(request, product_id):
             except Product.DoesNotExist:
                 messages.error(request, "Selected product was not found.")
                 return redirect('place_order', product_id=product_id)
-        elif product:
-            total_price = float(product.price) * quantity
-            order = Order.objects.create(
-                customer=profile,
-                product=product,
-                quantity=quantity,
-                deposit=deposit,
-                total_price=total_price,
-                is_customer_order=False
 
-            )
         else:
             order = Order.objects.create(
                     customer=profile,
+                    product=None,
                     quantity=quantity,
                     deposit=deposit,
                     total_price=0, 
@@ -70,10 +62,12 @@ def cancel_order(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer__user=request.user)
 
     if request.method == "POST":
-        order.status = 'Cancelled'
-        order.delete()  # Optional: If you want to delete the order instead of marking it as cancelled
-        order.save()
-        messages.success(request, "Order cancelled successfully.")
+        if order.status in ['pending', 'partial']:
+            order.status = 'cancelled'
+            order.save()
+            messages.success(request, "Order cancelled successfully.")
+        else:
+            messages.error(request, "You cannot cancel an order that is fully paid.")
         return redirect('my_orders')
     
     return render(request, 'orders/cancel_order.html', {'order': order})
@@ -101,11 +95,13 @@ def edit_order(request, order_id):
 
 @login_required(login_url='login_view')
 def my_orders(request):
-        
-    profile = Profile.objects.get(user=request.user)
-    orders = Order.objects.filter(customer=profile).order_by('-created_at') 
+    
 
-    return render(request, 'orders/my_orders.html', {'orders': orders})
+    profile = Profile.objects.get(user=request.user)
+    active_orders = Order.objects.filter(customer=profile).exclude(status='cancelled') 
+    cancelled_orders = Order.objects.filter(customer=profile, status='cancelled')
+
+    return render(request, 'orders/my_orders.html', {'active_orders': active_orders, 'cancelled_orders': cancelled_orders})
 
 #@user_passes_test(lambda u: u.is_superuser)
 def update_order_status(request, order_id, status):

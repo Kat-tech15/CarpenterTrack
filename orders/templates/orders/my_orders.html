@@ -1,39 +1,83 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <div class="container mt-5">
     <h4 class="text-center mb-4" style="font-style: oblique; color: steelblue;">My Orders</h4>
+
+    <!-- Active Orders -->
+    <h5 class="text-success mb-3">Active Orders</h5>
     <div class="row">
-        {% for order in orders %}
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-">
+        {% for order in active_orders %}
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-0" style="border-radius: 10px;">
                 {% if order.product %}
-                <img src="{{ order.product.image.url }}" class="card-img-top p-1" alt="{{ order.product.name }}"> {% elif order.refrence_image %}
-                <img src="{{ order.refrence_image.url }}" class="card-img-top" alt="Custom Order Image"> {% else %}
-                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image"> {% endif %}
+                <img src="{{ order.product.image.url }}" class="card-img-top rounded-top" alt="{{ order.product.name }}" style="height: 160px; object-fit: cover;">
+                {% elif order.refrence_image %}
+                <img src="{{ order.refrence_image.url }}" class="card-img-top rounded-top" alt="Custom Order" style="height: 160px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top rounded-top" alt="No Image" style="height: 160px; object-fit: cover;">
+                {% endif %}
 
-                <div class="card-body text-center">
-                    <p><strong>Quantity:</strong> {{ order.quantity }}</p>
-                    <p><strong>Total Price:</strong> Ksh {{ order.total_price }}</p>
-                    <p><strong>Deposit Paid:</strong> Ksh {{ order.deposit }}</p>
-                    <p><strong>Balance:</strong> Ksh {{ order.balance }}</p>
+                <div class="card-body p-2 text-center">
+                    <small><strong>Qty:</strong> {{ order.quantity }}</small><br>
+                    <small><strong>Total:</strong> Ksh {{ order.total_price }}</small><br>
+                    <small><strong>Deposit:</strong> Ksh {{ order.deposit }}</small><br>
+                    <small><strong>Balance:</strong> Ksh {{ order.balance }}</small><br>
 
-                    {% if order.status == 'pending' %}
-                    <span class="badge bg-warning text-dark">Pending</span> {% elif order.status == 'partial' %}
-                    <span class="badge bg-info text-dark">Partially Paid</span> {% else %}
-                    <span class="badge bg-success">Fully Paid</span> {% endif %}
+                    <span class="badge 
+                        {% if order.status == 'pending' %} bg-warning text-dark
+                        {% elif order.status == 'partial' %} bg-info text-dark
+                        {% elif order.status == 'paid' %} bg-success
+                        {% elif order.status == 'cancelled' %} bg-danger
+                        {% endif %}">
+                        {{ order.status|title }}
+                    </span>
                 </div>
 
-                <div class="card-footer d-flex justify-content-between">
-                    <a href="{% url 'edit_order' order.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
-                    <a href="{% url 'cancel_order' order.id %}" class="btn btn-outline-danger btn-sm">Cancel</a>
+                <div class="card-footer p-2 d-flex justify-content-between">
+                    <a href="{% url 'edit_order' order.id %}" class="btn btn-outline-secondary btn-sm px-3">Edit</a>
+                    <form action="{% url 'cancel_order' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm px-3">Cancel</button>
+                    </form>
                 </div>
             </div>
         </div>
         {% empty %}
-        <p class="text-center text-muted">You haven’t made any orders yet.</p>
+        <p class="text-center text-muted">You have no active orders.</p>
         {% endfor %}
     </div>
-    <ul>
-        <a class="justify-content-center btn btn-primary" href="{% url  'view_products' %}">View Products</a>
-    </ul>
+
+    <hr class="my-5">
+
+    <!-- Cancelled Orders -->
+    <h5 class="text-danger mb-3 text-center">Cancelled Orders</h5>
+    <div class="row">
+        {% for order in cancelled_orders %}
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border border-danger" style="border-radius: 10px;">
+                {% if order.product %}
+                <img src="{{ order.product.image.url }}" class="card-img-top rounded-top" alt="{{ order.product.name }}" style="height: 150px; object-fit: cover;">
+                {% elif order.refrence_image %}
+                <img src="{{ order.refrence_image.url }}" class="card-img-top rounded-top" alt="Custom Order" style="height: 150px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top rounded-top" alt="No Image" style="height: 150px; object-fit: cover;">
+                {% endif %}
+
+                <div class="card-body p-2 text-center">
+                    <small><strong>Qty:</strong> {{ order.quantity }}</small><br>
+                    <small><strong>Total:</strong> Ksh {{ order.total_price }}</small><br>
+                    <span class="badge bg-danger">{{ order.status|title }}</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No cancelled orders.</p>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a class="btn btn-primary px-4" href="{% url 'view_products' %}">View Products</a>
+    </div>
 </div>
 {% endblock %}
