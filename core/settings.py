@@ -66,6 +66,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
 
 TEMPLATES = [
     {
