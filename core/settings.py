@@ -67,7 +67,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 SOCIALACCOUNT_LOGIN_ON_GET = True
-LOGOUT_REDIRECT_URL = ''  
+LOGOUT_REDIRECT_URL = '/logout/'  
+LOGIN_REDIRECT_URL = '/profile/'
 
 
 
