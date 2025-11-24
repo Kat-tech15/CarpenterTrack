@@ -8,13 +8,38 @@
     {% csrf_token %}
 
     <div class="mb-3">
-      <label for="product" class="form-label">Select a Product (optional)</label>
-      <select name="product_id" class="form-select">
-        <option value="">-- Custom Order --</option>
-        {% for product in products %}
-          <option value="{{ product.id }}">{{ product.name }} - KSh {{ product.price }}</option>
-        {% endfor %}
-      </select>
+      <label class="form-label">Order Type:</label><br>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="order_type" id="productOrder" value="product" checked>
+        <label class="form-check-label" for="productOrder">Existing Product</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="order_type" id="customOrder" value="custom">
+        <label class="form-check-label" for="customOrder">Custom Order</label>
+      </div>
+    </div>
+
+    <div id="product-section">
+      <div class="mb-3">
+        <label for="product_id" class="form-label">Select a Product</label>
+        <select name="product_id" class="form-select">
+          <option value="">-- Select Product --</option>
+          {% for product in products %}
+            <option value="{{ product.id }}">{{ product.name }} - KSh {{ product.price }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div id="custom-section" style="display: none;">
+      <div class="mb-3">
+        <label for="custom_description" class="form-label">Custom Description</label>
+        <textarea name="custom_description" class="form-control" rows="3"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="reference_image" class="form-label">Upload Reference Image (optional)</label>
+        <input type="file" name="refrence_image" class="form-control">
+      </div>
     </div>
 
     <div class="mb-3">
@@ -22,6 +47,11 @@
       <input type="number" name="quantity" class="form-control" value="1" min="1" required>
     </div>
 
+    <div class="mb-3">
+      <label for="unit_price" class="form-lable">Unit Price</label>
+      <input type="number" name="unit_price" class="form-control" step="0.01" placeholder="Enter price per item">
+    </div>
+    
     <div class="mb-3">
       <label for="deposit" class="form-label">Deposit (KSh)</label>
       <input type="number" name="deposit" class="form-control" step="0.01" required>
@@ -32,17 +62,24 @@
       <input type="text" name="location" class="form-control" required>
     </div>
 
-    <div class="mb-3">
-      <label for="custom_description" class="form-label">Custom Description (if any)</label>
-      <textarea name="custom_description" class="form-control" rows="3"></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label for="reference_image" class="form-label">Upload Reference Image (optional)</label>
-      <input type="file" name="reference_image" class="form-control">
-    </div>
-
     <button type="submit" class="btn btn-primary w-100">Place Order</button>
   </form>
 </div>
+
+<script>
+  const productRadio = document.getElementById('productOrder');
+  const customRadio = document.getElementById('customOrder');
+  const productSection = document.getElementById('product-section');
+  const customSection = document.getElementById('custom-section');
+
+  productRadio.addEventListener('change', () => {
+    productSection.style.display = 'block';
+    customSection.style.display = 'none';
+  });
+
+  customRadio.addEventListener('change', () => {
+    productSection.style.display = 'none';
+    customSection.style.display = 'block';
+  });
+</script>
 {% endblock %}
