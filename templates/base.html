@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-lg" style="box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);">
+    <nav class="navbar navbar-expand-lg fixed-top shadow-lg" style="box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);">
         <div class="container">
             <a class="navbar-brand fw-bold" style="color: #28c2c7;" href="/">CarpenterTrack</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,13 +23,13 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a href="{% url 'upload_product' %}" class="nav-link">Upload</a></li>
                     <li class="nav-item"><a href="{% url 'admin_orders' %}" class="nav-link">Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}">Products</a></li>
+                    <li class="nav-item"><a  class="nav-link" href="{% url 'logout_view' %}">Logout</a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#products">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#testimonials">Testimonials</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
                     <li class="nav-item dropdown">
                         <a href="#" id="userDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
@@ -89,11 +89,11 @@
     <main class="mt-5 pt-4">
         {% block content %} {% endblock %}
     </main>
-    <footer class="bg-dark text-white mt-5">
+    <footer>
         <div class="container text-center">
             <p class="mb-0">&copy; {{ year }} CarpenterTrack. All Rights Reserved.</p>
-            <a href="#" class="text-white me-3">Privacy Policy</a>
-            <a href="#contact" class="text-white">Contact Us</a>
+            <a href="#" class=" me-3">Privacy Policy</a>
+            <a href="#contact">Contact Us</a>
             <p class="mb-1">Crafted with ❤️ by Kelvin Katwai</p>
         </div>
     </footer>
@@ -107,8 +107,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            
         }
-        
         a {
             color: #28c2c7;
         }
@@ -117,8 +117,8 @@
             position: fixed;
             bottom: 15px;
             right: 15px;
-            background: #188488;
-            color: #17e217ff;
+            background: #e45d0fea;
+            color: #fff;
             width: 40px;
             height: 40px;
             border-radius: 60%;
@@ -132,7 +132,7 @@
         }
         
         #backToTopBtn:hover {
-            background: #28c2c7;
+            background: #38eaf0;
             transform: scale(1.1);
         }
         
@@ -162,15 +162,6 @@
             font-style: oblique;
             margin-bottom: 20px;
         }
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
         .card-body small {
             font-size: 0.85rem;
             color: #333;
@@ -186,12 +177,11 @@
         .alert {
             transition: opacity 0.5s ease-out;
         }
-        
-        .hero {
-            background-image: url(static/images/carpenter.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            opacity: inherit;
+        h1 {
+            color: rgb(135, 80, 224);
+        }
+        a,p {
+            color: cornflowerblue;
         }
     </style>
     <script>
