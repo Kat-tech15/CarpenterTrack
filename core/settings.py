@@ -92,14 +92,17 @@ WSGI_APPLICATION = 'core.wsgi.application'
 SITE_ID = 1
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.getenv('DATABASE_URL'), conn_max_age=600)
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -138,6 +141,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 STATICFILES_STORAGE = "whitenoise.storage.CompressManifestStaticFilesStoraage"
 
 # Default primary key field type

@@ -34,9 +34,13 @@
         </form>
 
         <div class="mt-3 text-center">
-            <p style="font-style: oblique;">Or register with:</p>
-            <a href="{% provider_login_url 'google' %}" class="btn btn-danger w-100">
-                <i class="bi bi-google"></i> Register with Google
+            <p style="font-style: oblique;">Or</p>
+            <a href="{% provider_login_url 'google' %}" 
+            class="btn d-flex align-items-center justify-content-center w-100"
+            style="background: white; border: 1px solid #dadce0; color: rgba(0,0,0,.54); font-weight: 500;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" 
+                    style="width: 20px; height: 20px; margin-right: 10px;" alt="Google logo">
+                Login with Google
             </a>
         </div>
     </div>

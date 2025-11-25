@@ -57,8 +57,9 @@ def profile(request):
     profile = request.user.profile
 
     if request.method =="POST":
-        profile.phone_number = request.POST.get("phone_number")
+        profile.phone_number = request.POST.get("phone")
         profile.location = request.POST.get("location")
+        profile.bio = request.POST.get('bio')
 
         if 'profile_image' in request.FILES:
             profile.profile_image = request.FILES['profile_image']
