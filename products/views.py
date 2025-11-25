@@ -44,7 +44,7 @@ def update_product(request, pk):
             product.image = request.FILES['image']
         
         product.save()
-        return redirect('products')
+        return redirect('view_products')
     
     return render(request, 'products/update_product.html', {'product': product})
 
@@ -54,7 +54,7 @@ def delete_product(request, pk):
 
     if request.method == 'POST':
         product.delete()
-        messages.success(request, f"Product '{product.id}' deleted successfully.")
+        messages.success(request, f"Product '{product.name}' deleted successfully.")
         return redirect('view_products')
     
     return render(request, 'products/delete_product.html', {'produt': product})

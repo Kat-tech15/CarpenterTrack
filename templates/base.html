@@ -29,7 +29,9 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#products">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">Orders</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">Orders</a></li>
+                    {% endif %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
                     <li class="nav-item dropdown">
                         <a href="#" id="userDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
