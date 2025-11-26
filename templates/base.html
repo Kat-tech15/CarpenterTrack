@@ -94,7 +94,6 @@
     <footer>
         <div class="container text-center">
             <p class="mb-0">&copy; {{ year }} CarpenterTrack. All Rights Reserved.</p>
-            <a href="#" class=" me-3">Privacy Policy</a>
             <a href="#contact">Contact Us</a>
             <p class="mb-1">Crafted with ❤️ by Kelvin Katwai</p>
         </div>
@@ -104,17 +103,14 @@
         html {
             scroll-behavior: smooth;
         }
-        
         body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            
+            min-height: 100vh;   
         }
         a {
             color: #28c2c7;
         }
-        
         #backToTopBtn {
             position: fixed;
             bottom: 15px;
@@ -137,15 +133,20 @@
             background: #38eaf0;
             transform: scale(1.1);
         }
-        
         main {
             flex: 1;
         }
-        
         section {
             scroll-margin-top: 100px;
         }
-        
+        .hero {
+            background-image: url(static/images/profile1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            backface-visibility: unset;
+            -webkit-backface-visibility: hidden;
+            margin: 20px 20px;
+        }
         footer {
             color: white;
             text-align: center;
@@ -168,14 +169,12 @@
             font-size: 0.85rem;
             color: #333;
         }
-
         hr {
             border: none;
             border-top: 2px dashed #ddd;
             width: 60%;
             margin: 2rem auto;
         }
-
         .alert {
             transition: opacity 0.5s ease-out;
         }

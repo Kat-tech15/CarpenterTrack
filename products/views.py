@@ -58,4 +58,3 @@ def delete_product(request, pk):
         return redirect('view_products')
     
     return render(request, 'products/delete_product.html', {'produt': product})
-

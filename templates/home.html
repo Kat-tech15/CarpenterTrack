@@ -1,14 +1,14 @@
 {% extends 'base.html' %} {% load static %} {% block title %} CarpenterTrack|Home {% endblock %} {% block content %}
 <section class="hero text-center py-5" id="hero">
-    <div class="container">
+    <div class="home">
         <h1 class="display-4 fw-bold">Welcome to CarpenterTrack</h1>
-        <p class="lead mb-4">Your trusted platform for custom carpentry and seamless order traclking.</p>
+        <p class="lead mb-4 fw-bold">Your trusted platform for custom carpentry and seamless order traclking.</p>
         <a href="{% url 'view_products'%}" class="btn btn-primary btn-lg">Explore Products</a>
     </div>
 </section>
 <section class="container py-5" id="about">
     <h4>About Us</h4>
-    <p class="lead tecxt-center">
+    <p class="lead tecxt-center fw-bold">
         CarpenterTrack connects customers with skilled carpenters for high-quality, custom-built furniture. We simplify your ordering process - from deposit to delivery - ensuring transparency, reliability, and satisfaction.
     </p>
 </section>
@@ -41,7 +41,7 @@
                 <div class="card shadow-sm border border-warning h-100 p-3">
                     <blockquote class="blockquote mb-0">
                         <p>"Excellent workmanship and timely delivery!"</p>
-                        <img src="{% static 'images/pic1.jpg' %}" alt="John M." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <img src="{% static 'images/pic1.jpg' %}" alt="John M." class="mx-auto d-block mt-3 p-1" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
                         <footer class="blockquote-footer mt-2">John M.</footer>
                     </blockquote>
                 </div>
@@ -51,7 +51,7 @@
                 <div class="card shadow-sm border border-warning h-100 p-3">
                     <blockquote class="blockquote mb-0">
                         <p>"Very transparent - I could track my order progress easily."</p>
-                        <img src="{% static 'images/pic2.jpg' %}" alt="Hary K." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <img src="{% static 'images/pic2.jpg' %}" alt="Hary K." class="mx-auto d-block mt-3 p-1" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
                         <footer class="blockquote-footer mt-2">Hary K.</footer>
                     </blockquote>
                 </div>
@@ -61,7 +61,7 @@
                 <div class="card shadow-sm border border-warning h-100 p-3">
                     <blockquote class="blockquote mb-0">
                         <p>"Affordable and beautiful furniture, highly recommend!"</p>
-                        <img src="{% static 'images/pic3.jpg' %}" alt="Kevin O." class="mx-auto d-block mt-3 p-2" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <img src="{% static 'images/pic3.jpg' %}" alt="Kevin O." class="mx-auto d-block mt-3 p-1" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
                         <footer class="blockquote-footer mt-2">Kevin O.</footer>
                     </blockquote>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="card shadow-sm border border-warning h-100 p-3">
                     <blockquote class="blockquote mb-0">
                         <p>"They exceeded my expectations — I’ll definitely order again!"</p>
-                        <img src="{% static 'images/pic4.jpg' %}" alt="Mary L." class="mx-auto d-block mt-3" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
+                        <img src="{% static 'images/pic4.jpg' %}" alt="Mary L." class="mx-auto d-block mt-3 p-1" style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid #34b7f3e1;">
                         <footer class="blockquote-footer mt-2">Mary L.</footer>
                     </blockquote>
                 </div>
