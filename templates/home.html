@@ -81,26 +81,31 @@
 </section>
 
 <section class="text-light py-5" id="contact">
-    <h4>Contact Us</h4>
+    <h4 class="mb-4 text-center">Contact Us</h4>
     <div class="container d-flex justify-content-center">
         <div class="card shadow-lg p-4" style="border-radius: 15px; width: 400px;">
             <form method="POST" action="{% url 'home' %}">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter Your name here" required>
+
+                <div class="mb-3 position-relative">
+                    <input type="text" name="name" id="name" class="form-control pt-3" placeholder="Enter your name" required>
+                    <span class="icon-top"><i class="fas fa-user"></i></span>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="example@gmail.com" required>
+
+                <div class="mb-3 position-relative">
+                    <input type="email" name="email" id="email" class="form-control pt-3" placeholder="example@gmail.com" required>
+                    <span class="icon-top"><i class="fas fa-envelope"></i></span>
                 </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea name="message" id="message" rows="3" class="form-control" placeholder="Enter your message here..." required></textarea>
+
+                <div class="mb-3 position-relative">
+                    <textarea name="message" id="message" rows="3" class="form-control pt-3" placeholder="Enter your message here..." required></textarea>
+                    <span class="icon-top"><i class="fas fa-comment"></i></span>
                 </div>
-                <button type="submit" class="text-center btn btn-primary w-100">Submit</button>
+
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
             </form>
         </div>
     </div>
 </section>
+
 {% endblock %}
