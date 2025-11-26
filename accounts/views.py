@@ -97,7 +97,7 @@ def reply_message(request, message_id):
     msg = get_object_or_404(Contact, id=message_id)
     if request.method == 'POST':
         response_text = request.POST.get('response')
-        msg.reponse =  response_text
+        msg.response =  response_text
         msg.responded_at = timezone.now()
         msg.is_read = True
         msg.save()
