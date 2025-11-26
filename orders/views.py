@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from . models import Order
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 from accounts.models import Profile
 from products.models import Product 
 
@@ -133,3 +135,15 @@ def admin_orders(request):
     all_orders = Order.objects.all().order_by('-id')
 
     return render(request, 'orders/all_orders.html', {'all_orders':all_orders})
+
+def create_superuser(request):
+    User = get_user_model()
+    username = 'admin'  
+    email = 'kelvinmutua269@gmail.com'
+    password = 'cekret'
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse("superuser created successfully!")
+    return HttpResponse("Superuser already exists!")
+    

@@ -8,4 +8,5 @@ urlpatterns = [
     path('my_orders/', views.my_orders, name='my_orders'),
     path('all_orders/', views.admin_orders, name='admin_orders'),
     path('update/order/<int:order_id>/<str:status>/', views.update_order_status, name='update_order_status'),
+    path('create-superuser', views.create_superuser),
 ]
