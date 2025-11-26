@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth import logout, login, authenticate, get_user_model
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models  import User
 from django.core.mail import send_mail
+from django.http import HttpResponse
 from .models import Contact
 from products.models import Product
 from django.utils import timezone
@@ -111,4 +112,15 @@ def reply_message(request, message_id):
         messages.success(request, "Message responded to successfully and email send to the user!")
         return redirect('admin_messages')
     return render(request, 'accounts/respond_message.html', {'message': msg})
+    
+def create_superuser(request):
+    User = get_user_model()
+    username = 'admin'  
+    email = 'kelvinmutua269@gmail.com'
+    password = 'cekret'
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse("superuser created successfully!")
+    return HttpResponse("Superuser already exists!")
     

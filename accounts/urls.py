@@ -14,5 +14,7 @@ urlpatterns = [
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),  
     path('profile/', views.profile, name='profile'),  
     path('messages/', views.admin_messages, name='admin_messages'),
-    path('messages/respond/<int:message_id>/', views.reply_message, name='reply_message')   
+    path('messages/respond/<int:message_id>/', views.reply_message, name='reply_message'),  
+    path('create-superuser/', views.create_superuser),
+
 ]
