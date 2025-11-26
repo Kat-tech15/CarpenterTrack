@@ -62,6 +62,17 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'admin_orders' %}"><i class="fa-solid fa-list-check me-1"></i>Orders</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}"><i class="fa-solid fa-box-open me-1"></i>Products</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout_view' %}"><i class="fa-solid fa-right-from-bracket me-1"></i>Logout</a></li>
+                        <li class="nav-item dropdown d-none d-lg-block">
+                            <a href="{% url 'admin_messages' %}" class="nav-link d-flex align-items-center position-relative">
+                                <i class="fa-solid fa-bell fs-4" style="color: #28c2c7;"></i>
+                                {% if admin_unread_count > 0 %}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ admin_unread_count }}
+                                </span>
+                                {% endif %}
+                            </a>
+                        </li>
+
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fa-solid fa-house me-1"></i>Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about"><i class="fa-solid fa-info-circle me-1"></i>About</a></li>
@@ -151,6 +162,10 @@
         .navbar .dropdown-menu .dropdown-item {
             color: #333 !important;
             font-weight: 500;
+        }
+        .navbar .badge {
+            font-size: 0.7rem;
+            padding: 0.3em 0.5em;
         }
 
         .navbar .dropdown-menu .dropdown-item:hover {

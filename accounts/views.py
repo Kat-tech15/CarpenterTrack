@@ -1,14 +1,29 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth import get_user_model, logout, login, authenticate
+from django.shortcuts import render,redirect, get_object_or_404
+from django.contrib.auth import logout, login, authenticate
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models  import User
 from .models import Contact
 from products.models import Product
+from django.utils import timezone
 from datetime import datetime
 
 def home(request):
+
     featured_products = Product.objects.all()[:8]
 
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        Contact.objects.create(
+            name=name,
+            email=email,
+            message=message
+        )
+        messages.success(request, "Message submitted successfully!")
+        return redirect('home')
     return render(request, 'home.html', {'featured_products': featured_products, 'year': datetime.now().year})
     
 def register(request):
@@ -69,17 +84,19 @@ def profile(request):
 
     return render(request, 'accounts/profile.html', {"profile": profile})
 
-def contact(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
+@staff_member_required
+def admin_messages(request):
+    message_list = Contact.objects.all().order_by('-created_at')
+    return render(request, 'accounts/admin_messages.html', {'messages': message_list})
 
-        Contact.objects.create(
-            name=name,
-            email=email,
-            message=message
-        )
-        messages.success(request, "Message submitted successfully!")
-        return redirect('contact')
-    return render(request, 'accounts/contact.html')
+@staff_member_required
+def reply_message(request, message_id):
+    msg = get_object_or_404(Contact, id=message_id)
+    if request.method == 'POST':
+        msg.reponse =  request.POST.get('response')
+        msg.responded_at = timezone.now()
+        msg.is_read = True
+        msg.save()
+        return redirect('admin_messages')
+    return render(request, 'accounts/respond_message.html', {'message': msg})
+    
