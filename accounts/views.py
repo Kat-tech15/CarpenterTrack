@@ -3,10 +3,12 @@ from django.contrib.auth import logout, login, authenticate
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models  import User
+from django.core.mail import send_mail
 from .models import Contact
 from products.models import Product
 from django.utils import timezone
 from datetime import datetime
+import os
 
 def home(request):
 
@@ -87,16 +89,26 @@ def profile(request):
 @staff_member_required
 def admin_messages(request):
     message_list = Contact.objects.all().order_by('-created_at')
-    return render(request, 'accounts/admin_messages.html', {'messages': message_list})
+    return render(request, 'accounts/admin_messages.html', {'contact_list': message_list})
 
 @staff_member_required
 def reply_message(request, message_id):
     msg = get_object_or_404(Contact, id=message_id)
     if request.method == 'POST':
-        msg.reponse =  request.POST.get('response')
+        response_text = request.POST.get('response')
+        msg.reponse =  response_text
         msg.responded_at = timezone.now()
         msg.is_read = True
         msg.save()
+
+        send_mail(
+            subject='Response to your message on CarpenterTrack',
+            message=f"Hello {msg.name}, \n\nAdmin has responded to your message:\n\n{response_text}\n\nThank you. ",
+            from_email=os.getenv('EMAIL_HOST_USER'),
+            recipient_list=[msg.email],
+            fail_silently=False
+        )
+        messages.success(request, "Message responded to successfully and email send to the user!")
         return redirect('admin_messages')
     return render(request, 'accounts/respond_message.html', {'message': msg})
     
