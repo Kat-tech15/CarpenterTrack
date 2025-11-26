@@ -112,7 +112,14 @@ def reply_message(request, message_id):
         messages.success(request, "Message responded to successfully and email send to the user!")
         return redirect('admin_messages')
     return render(request, 'accounts/respond_message.html', {'message': msg})
-    
+
+@staff_member_required
+def delete_message(request, message_id):
+    msg = get_object_or_404(Contact, id=message_id)
+    msg.delete()
+    messages.success(request, "Message deleted successfully!")
+    return redirect('admin_messages')  
+
 def create_superuser(request):
     User = get_user_model()
     username = 'admin'  

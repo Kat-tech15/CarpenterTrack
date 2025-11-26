@@ -15,6 +15,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),  
     path('messages/', views.admin_messages, name='admin_messages'),
     path('messages/respond/<int:message_id>/', views.reply_message, name='reply_message'),  
+    path('message/delete/<int:message_id>/', views.delete_message, name='delete_message'),
     path('create-superuser/', views.create_superuser),
 
 ]

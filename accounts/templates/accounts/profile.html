@@ -1,10 +1,6 @@
-<!-- templates/accounts/profile.html -->
 {% extends "base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4">{{ user.username }}'s Profile</h2>
-
-  <!-- Display current profile -->
+<div class="container m-5">
   <div class="card mb-4" style="max-width: 500px;">
     <div class="card-body text-center">
       {% if profile.profile_image %}
@@ -25,17 +21,17 @@
 
         <div class="mb-3">
           <label for="bio" class="form-label">Bio</label>
-          <textarea class="form-control" id="bio" name="bio">{{ profile.bio }}</textarea>
+          <textarea class="form-control" id="bio" name="bio" placeholder="Describe yourself here">{{ profile.bio }}</textarea>
         </div>
 
         <div class="mb-3">
           <label for="phone" class="form-label">Phone</label>
-          <input type="text" class="form-control" id="phone" name="phone" value="{{ profile.phone_number }}">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" value="{{ profile.phone_number }}">
         </div>
 
         <div class="mb-3">
           <label for="location" class="form-label">Location</label>
-          <input type="text" class="form-control" id="location" name="location" value="{{ profile.location }}">
+          <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location" value="{{ profile.location }}">
         </div>
 
         <div class="mb-3">

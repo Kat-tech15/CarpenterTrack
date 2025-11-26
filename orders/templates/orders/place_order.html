@@ -34,11 +34,11 @@
     <div id="custom-section" style="display: none;">
       <div class="mb-3">
         <label for="custom_description" class="form-label">Custom Description</label>
-        <textarea name="custom_description" class="form-control" rows="3"></textarea>
+        <textarea name="custom_description" class="form-control" rows="3" placeholder="Provide the product specifications"></textarea>
       </div>
       <div class="mb-3">
         <label for="reference_image" class="form-label">Upload Reference Image (optional)</label>
-        <input type="file" name="refrence_image" class="form-control">
+        <input type="file" name="refrence_image" class="form-control" placeholder="Provide an image if any">
       </div>
       <div class="mb-3">
         <label for="unit_price" class="form-lable">Unit Price</label>
@@ -48,17 +48,17 @@
 
     <div class="mb-3">
       <label for="quantity" class="form-label">Quantity</label>
-      <input type="number" name="quantity" class="form-control" value="1" min="1" required>
+      <input type="number" name="quantity" class="form-control" value="1" min="1" required placeholder="Enter the quantity to order">
     </div>
     
     <div class="mb-3">
       <label for="deposit" class="form-label">Deposit (KSh)</label>
-      <input type="number" name="deposit" class="form-control" step="0.01" required>
+      <input type="number" name="deposit" class="form-control" step="0.01" required placeholder="Enter the deposit to make">
     </div>
 
     <div class="mb-3">
       <label for="location" class="form-label">Delivery Location</label>
-      <input type="text" name="location" class="form-control" required>
+      <input type="text" name="location" class="form-control" required placeholder="Provide your pick-up point"> 
     </div>
 
     <button type="submit" class="btn btn-primary w-100">Place Order</button>
