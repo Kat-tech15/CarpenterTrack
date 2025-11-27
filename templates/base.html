@@ -70,9 +70,9 @@
 
                     {% if user.is_superuser %}
                         <li class="nav-item"><a class="nav-link" href="/"><i class="fa-solid fa-house me-1"></i>Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'upload_product' %}"><i class="fa-solid fa-box-open me-1"></i>Upload</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'upload_product' %}"><i class="bi bi-cloud-upload-fill me-1"></i> Upload</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'admin_orders' %}"><i class="fa-solid fa-list-check me-1"></i>Orders</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}"><i class="fa-solid fa-box-open me-1"></i>Products</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'view_products' %}"><i class="bi bi-box-seam me-1"></i> Products</a></li>
                         <li class="nav-item dropdown d-none d-lg-block">
                             <a href="{% url 'admin_messages' %}" class="nav-link d-flex align-items-center position-relative">
                                 <i class="fa-solid fa-bell fs-4"></i>
@@ -125,7 +125,7 @@
         <div class="container text-center d-flex justify-content-center align-items-center flex-wrap gap-3 fw-bold">
             <p class="mb-0">&copy; {{ year }} CarpenterTrack. All Rights Reserved.</p>
             <a href="#contact">Contact Us</a>
-            <p class="mb-0">Crafted with ❤️ by Kelvin Katwai</p>
+            <p class="mb-0">Crafted with ❤️ by Kat-tech</p>
         </div>
     </footer>
 
