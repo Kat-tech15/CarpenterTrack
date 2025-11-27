@@ -16,7 +16,7 @@
                     <div class="card-body text-center gap-2">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                        <p class="fw-bold text-primary">{{ product.price }}/=KSh</p>
+                        <p class="fw-bold text-primary">Ksh {{ product.price }}</p>
                         <a href="{% url 'place_order' product.id %}" class="btn btn-primary btn-sm">Order</a>
                         {% if user.is_superuser %}
                             <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm">Update</a>
