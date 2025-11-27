@@ -23,25 +23,31 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        if self.status != 'cancelled':
-            if self.product and self.total_price == 0:
-                self.total_price = self.product.price * self.quantity
-            
-            self.balance = max(
-                Decimal(str(self.total_price)) - Decimal(str(self.deposit)),
-                Decimal('0.00')
-            )
-
-            if self.deposit <= 0:
-                self.status = 'pending'
-            elif self.deposit < self.total_price:
-                self.status = 'partial'
+        if self.is_customer_order:
+            if self.status != 'cancelled':
+                if self.product and self.total_price == 0:
+                    self.total_price = self.product.price * self.quantity
+                
+                self.balance = max(
+                    Decimal(str(self.total_price)) - Decimal(str(self.deposit)),
+                    Decimal('0.00')
+                )
+                
+                if self.deposit <= 0:
+                    self.status = 'pending'
+                elif self.deposit < self.total_price:
+                    self.status = 'partial'
+                else: 
+                    self.status = 'paid'
             else:
-                self.status = 'paid'
+                self.balance = max(
+                    Decimal(str(self.total_price)) - Decimal(str(self.deposit)),
+                    Decimal('0.00')
+                )
+        
         else:
             self.balance = max(
-                Decimal(str(self.total_price)) - Decimal(str(self.deposit)),
+                Decimal(str(self.total_price)) -  Decimal(str(self.deposit)),
                 Decimal('0.00')
             )
-
-        super().save(*args,  **kwargs)
+        super().save(*args, **kwargs)
