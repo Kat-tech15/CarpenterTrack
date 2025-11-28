@@ -20,7 +20,7 @@ class Profile(models.Model):
     email = models.EmailField()
     location = models.CharField(max_length=100, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_image = models.ImageField(upload_to='profile_images/', validators=[validate_image], null=True, blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/', validators=[validate_image, validate_image_size], null=True, blank=True)
     
     def __str__(self):
         return f"{self.user.username}"
