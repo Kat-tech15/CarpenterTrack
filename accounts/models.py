@@ -1,5 +1,18 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ValidationError
+import os
+
+def validate_image(file):
+    ext = os.path.splitext(file.name)[1]
+    valid_extensions = ['.png', '.jpg', '.jpeg', '.gif']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Unsupported file extension. Please upload an image file.')
+
+def validate_image_size(file):
+    max_size = 2 * 1024 * 1024
+    if file.size > max_size:
+        raise ValidationError('Image file size should not exceed 2MB.')
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -7,7 +20,7 @@ class Profile(models.Model):
     email = models.EmailField()
     location = models.CharField(max_length=100, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/', validators=[validate_image], null=True, blank=True)
     
     def __str__(self):
         return f"{self.user.username}"
