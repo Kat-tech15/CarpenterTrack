@@ -85,6 +85,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 SITE_ID = 1
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
 if DEBUG:
     DATABASES = {
         'default': {
@@ -94,9 +95,12 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.parse(os.getenv('DATABASE_URL'), conn_max_age=600)
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True 
+        )
     }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
