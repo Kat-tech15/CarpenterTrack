@@ -118,7 +118,7 @@ def reply_message(request, message_id):
                     recipient_list=[msg.email],
                     fail_silently=False
                 )
-                messages.success(request, "Message responded to successfully and email sent to the user!")
+                messages.success(request, "Message responded to successfully!")
             else:
                 messages.error(request, "Recipient email is invalid.")
         except BadHeaderError:
