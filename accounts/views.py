@@ -6,6 +6,7 @@ from django.contrib.auth.models  import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from .models import Contact
+from django.core.mail import send_mail, BadHeaderError
 from products.models import Product
 from django.utils import timezone
 from datetime import datetime
@@ -95,24 +96,39 @@ def admin_messages(request):
 @staff_member_required
 def reply_message(request, message_id):
     msg = get_object_or_404(Contact, id=message_id)
+
     if request.method == 'POST':
-        response_text = request.POST.get('response')
-        msg.response =  response_text
+        response_text = request.POST.get('response', '').strip()
+
+        if not response_text:
+            messages.error(request, "Response cannot be empty.")
+            return render(request, 'accounts/respond_message.html', {'message': msg})
+
+        msg.response = response_text
         msg.responded_at = timezone.now()
         msg.is_read = True
         msg.save()
 
-        send_mail(
-            subject='Response to your message on CarpenterTrack',
-            message=f"Hello {msg.name}, \n\nAdmin has responded to your message:\n\n{response_text}\n\nThank you. ",
-            from_email=os.getenv('EMAIL_HOST_USER'),
-            recipient_list=[msg.email],
-            fail_silently=False
-        )
-        messages.success(request, "Message responded to successfully and email send to the user!")
-        return redirect('admin_messages')
-    return render(request, 'accounts/respond_message.html', {'message': msg})
+        try:
+            if msg.email:
+                send_mail(
+                    subject='Response to your message on CarpenterTrack',
+                    message=f"Hello {msg.name}, \n\nAdmin has responded to your message:\n\n{response_text}\n\nThank you.",
+                    from_email=os.getenv('EMAIL_HOST_USER'),
+                    recipient_list=[msg.email],
+                    fail_silently=False
+                )
+                messages.success(request, "Message responded to successfully and email sent to the user!")
+            else:
+                messages.error(request, "Recipient email is invalid.")
+        except BadHeaderError:
+            messages.error(request, "Invalid header found in email.")
+        except Exception as e:
+            messages.error(request, f"Error sending email: {e}")
 
+        return redirect('admin_messages')
+
+    return render(request, 'accounts/respond_message.html', {'message': msg})
 @staff_member_required
 def delete_message(request, message_id):
     msg = get_object_or_404(Contact, id=message_id)
