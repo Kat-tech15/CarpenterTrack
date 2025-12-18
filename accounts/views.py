@@ -3,7 +3,6 @@ from django.contrib.auth import logout, login, authenticate, get_user_model
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models  import User
-from django.core.mail import send_mail
 from django.http import HttpResponse
 from .models import Contact
 from django.core.mail import send_mail, BadHeaderError
@@ -11,6 +10,9 @@ from products.models import Product
 from django.utils import timezone
 from datetime import datetime
 import os
+import logging 
+
+logger = logging.getLogger(__name__)
 
 def home(request):
 
@@ -109,8 +111,9 @@ def reply_message(request, message_id):
         msg.is_read = True
         msg.save()
 
-        try:
-            if msg.email:
+    
+        if msg.email:
+            try:
                 send_mail(
                     subject='Response to your message on CarpenterTrack',
                     message=f"Hello {msg.name}, \n\nAdmin has responded to your message:\n\n{response_text}\n\nThank you.",
@@ -119,16 +122,20 @@ def reply_message(request, message_id):
                     fail_silently=False
                 )
                 messages.success(request, "Message responded to successfully!")
-            else:
-                messages.error(request, "Recipient email is invalid.")
-        except BadHeaderError:
-            messages.error(request, "Invalid header found in email.")
-        except Exception as e:
-            messages.error(request, f"Error sending email: {e}")
-
+            except BadHeaderError:
+                messages.error(request, "Invalid header found in email.")
+                logger.error(f"BadHeaderError when sending email to {msg.email}")
+            except Exception as e:
+                messages.error(request, f"Error sending email: {e}")
+                logger.error(f"Error sending email to {msg.email}: {e}")
+        else:
+            messages.error(request, "Recipient email is invalid.")
+            logger.warning(f"Attempted to send response to message ID {msg.id} with invalid email.")
+        
         return redirect('admin_messages')
 
     return render(request, 'accounts/respond_message.html', {'message': msg})
+
 @staff_member_required
 def delete_message(request, message_id):
     msg = get_object_or_404(Contact, id=message_id)
