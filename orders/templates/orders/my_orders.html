@@ -2,14 +2,11 @@
 {% load static %}
 {% block content %}
 <div class="container mt-5">
-    <h4 class="text-center mb-4" style="font-style: oblique; color: steelblue;">My Orders</h4>
-
-    <!-- Active Orders -->
-    <h5 class="text-success mb-3">Active Orders</h5>
+    <h5 class="text-success mb-3 text-center">Active Orders</h5>
     <div class="row">
         {% for order in active_orders %}
         <div class="col-md-4 mb-3">
-            <div class="card shadow-sm border-0" style="border-radius: 10px;">
+            <div class="card shadow-sm border border-success p-1" style="border-radius: 10px;">
                 {% if order.product %}
                 <img src="{{ order.product.image.url }}" class="card-img-top rounded-top" alt="{{ order.product.name }}" style="height: 160px; object-fit: cover;">
                 {% elif order.refrence_image %}
@@ -19,7 +16,7 @@
                 {% endif %}
 
                 <div class="card-body p-2 text-center">
-                    <small><strong>Qty:</strong> {{ order.quantity }}</small><br>
+                    <small><strong>Quantity:</strong> {{ order.quantity }}</small><br>
                     <small><strong>Total:</strong> Ksh {{ order.total_price }}</small><br>
                     <small><strong>Deposit:</strong> Ksh {{ order.deposit }}</small><br>
                     <small><strong>Balance:</strong> Ksh {{ order.balance }}</small><br>
@@ -50,12 +47,11 @@
 
     <hr class="my-5">
 
-    <!-- Cancelled Orders -->
     <h5 class="text-danger mb-3 text-center">Cancelled Orders</h5>
     <div class="row">
         {% for order in cancelled_orders %}
         <div class="col-md-4 mb-3">
-            <div class="card shadow-sm border border-danger" style="border-radius: 10px;">
+            <div class="card shadow-sm border border-danger p-1" style="border-radius: 10px;">
                 {% if order.product %}
                 <img src="{{ order.product.image.url }}" class="card-img-top rounded-top" alt="{{ order.product.name }}" style="height: 150px; object-fit: cover;">
                 {% elif order.refrence_image %}

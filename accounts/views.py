@@ -1,14 +1,35 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth import get_user_model, logout, login, authenticate
+from django.shortcuts import render,redirect, get_object_or_404
+from django.contrib.auth import logout, login, authenticate, get_user_model
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models  import User
+from django.http import HttpResponse
 from .models import Contact
+from django.core.mail import send_mail, BadHeaderError
 from products.models import Product
+from django.utils import timezone
 from datetime import datetime
+import os
+import logging 
+
+logger = logging.getLogger(__name__)
 
 def home(request):
+
     featured_products = Product.objects.all()[:8]
 
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        Contact.objects.create(
+            name=name,
+            email=email,
+            message=message
+        )
+        messages.success(request, "Message submitted successfully!")
+        return redirect('home')
     return render(request, 'home.html', {'featured_products': featured_products, 'year': datetime.now().year})
     
 def register(request):
@@ -57,8 +78,9 @@ def profile(request):
     profile = request.user.profile
 
     if request.method =="POST":
-        profile.phone_number = request.POST.get("phone_number")
+        profile.phone_number = request.POST.get("phone")
         profile.location = request.POST.get("location")
+        profile.bio = request.POST.get('bio')
 
         if 'profile_image' in request.FILES:
             profile.profile_image = request.FILES['profile_image']
@@ -68,17 +90,67 @@ def profile(request):
 
     return render(request, 'accounts/profile.html', {"profile": profile})
 
-def contact(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
+@staff_member_required
+def admin_messages(request):
+    message_list = Contact.objects.all().order_by('-created_at')
+    return render(request, 'accounts/admin_messages.html', {'contact_list': message_list})
 
-        Contact.objects.create(
-            name=name,
-            email=email,
-            message=message
-        )
-        messages.success(request, "Message submitted successfully!")
-        return redirect('contact')
-    return render(request, 'accounts/contact.html')
+@staff_member_required
+def reply_message(request, message_id):
+    msg = get_object_or_404(Contact, id=message_id)
+
+    if request.method == 'POST':
+        response_text = request.POST.get('response', '').strip()
+
+        if not response_text:
+            messages.error(request, "Response cannot be empty.")
+            return render(request, 'accounts/respond_message.html', {'message': msg})
+
+        msg.response = response_text
+        msg.responded_at = timezone.now()
+        msg.is_read = True
+        msg.save()
+
+    
+        if msg.email:
+            try:
+                send_mail(
+                    subject='Response to your message on CarpenterTrack',
+                    message=f"Hello {msg.name}, \n\nAdmin has responded to your message:\n\n{response_text}\n\nThank you.",
+                    from_email=os.getenv('EMAIL_HOST_USER'),
+                    recipient_list=[msg.email],
+                    fail_silently=False
+                )
+                messages.success(request, "Message responded to successfully!")
+            except BadHeaderError:
+                messages.error(request, "Invalid header found in email.")
+                logger.error(f"BadHeaderError when sending email to {msg.email}")
+            except Exception as e:
+                messages.error(request, f"Error sending email: {e}")
+                logger.error(f"Error sending email to {msg.email}: {e}")
+        else:
+            messages.error(request, "Recipient email is invalid.")
+            logger.warning(f"Attempted to send response to message ID {msg.id} with invalid email.")
+        
+        return redirect('admin_messages')
+
+    return render(request, 'accounts/respond_message.html', {'message': msg})
+
+@staff_member_required
+def delete_message(request, message_id):
+    msg = get_object_or_404(Contact, id=message_id)
+    msg.delete()
+    messages.success(request, "Message deleted successfully!")
+    return redirect('admin_messages')  
+
+def create_superuser(request):
+    User = get_user_model()
+    username = 'admin'  
+    email = 'kelvinmutua269@gmail.com'
+    password = 'cekret'
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse("superuser created successfully!")
+    return HttpResponse("Superuser already exists!")
+    

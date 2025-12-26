@@ -1,52 +1,55 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-<div class="container mt-5">
-    <h4 class="mb-4 text-center">Manage Customers Orders</h4>
-    <table class="table table-bordered table-hover shadow-sm">
-        <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>Customer</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Amount Paid</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in all_orders %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ order.customer}}</td>
-                <td>{{ order.product.name }}</td>
-                <td>{{ order.quantity }}</td>
-                <td>{{ order.deposit }}</td>
-                <td>
-                    <span class="bange
-                        {% if order.status == 'Pending' %} bg-secondary
-                        {% elif order.status == 'Approved' %} bg-success 
-                        {% elif order.status == 'In Progress' %} bg-warning text-dark
-                        {% elif order.status == 'Completed' %} bg-primary
-                        {% elif order.status == 'Cancelled' %} bg-danger 
-                        {% endif %}
-                        ">
-                        {{ order.status }}
-                    </span>
-                </td>
-                <td>
-                    <a href="{% url 'update_order_status' order.id 'Approved' %}" class="btn btn-success btn-sm">Approve</a>
-                    <a href="{% url 'update_order_status' order.id 'In Progress' %}" class="btn btn-warning btn-sm text-dark">In Progress</a>
-                    <a href="{% url 'update_order_status' order.id 'Completed' %}" class="btn btn-primary btn-sm">Complete</a>
-                    <a href="{% url 'update_order_status' order.id 'Cancelled' %}" class="btn btn-danger btn-sm">Cancel</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7" class="text-center">No orders available.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container my-5" style="max-width: 900px;">
+    <h2 class="text-center mb-4 text-primary">Manage Customer Orders</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Amount Paid</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in all_orders %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ order.customer }}</td>
+                        <td>{% if order.product %}{{ order.product.name }}{% else %}Custom{% endif %}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.deposit }}</td>
+                        <td>
+                            <span class="badge
+                                {% if order.status == 'pending' %} bg-secondary
+                                {% elif order.status == 'partial' %} bg-warning text-dark
+                                {% elif order.status == 'paid' %} bg-success
+                                {% elif order.status == 'cancelled' %} bg-danger
+                                {% endif %}">
+                                {{ order.status|title }}
+                            </span>
+                        </td>
+                        <td class="d-flex flex-wrap gap-1">
+                            <a href="{% url 'update_order_status' order.id 'pending' %}" class="btn btn-secondary btn-sm">Pending</a>
+                            <a href="{% url 'update_order_status' order.id 'partial' %}" class="btn btn-warning btn-sm text-dark">Partial</a>
+                            <a href="{% url 'update_order_status' order.id 'paid' %}" class="btn btn-success btn-sm">Paid</a>
+                            <a href="{% url 'update_order_status' order.id 'cancelled' %}" class="btn btn-danger btn-sm">Cancel</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No orders available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}

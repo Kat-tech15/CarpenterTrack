@@ -6,18 +6,22 @@
     <h4 class="mb-4 text-center" style="color: cadetblue; font-style: oblique;">Available Products</h4>
     <div class="row mt-4">
         {% for product in products %}
-            <div class="col-md-3 g-4">
-                <div class="card h-100 shadow-sm">
+            <div class="col-md-3  g-4">
+                <div class="card h-100 border border-success shadow-sm p-1">
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name}}" class="card-img-top" style="height: 200px; object-fit: cover;">
                     {% else %}
                         <img src="#" class="card-img-top" alt="No image availble" style="height: 200px; object-fit: cover;"> 
                     {% endif %}   
-                    <div class="card-body text-center">
+                    <div class="card-body text-center gap-2">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                        <p class="fw-bold text-primary">${{ product.price }}</p>
-                        <a href="{% url 'place_order' product.id %}" class="btn btn-primary w-100">Order</a>
+                        <p class="fw-bold text-primary">Ksh {{ product.price }}</p>
+                        <a href="{% url 'place_order' product.id %}" class="btn btn-primary btn-sm">Order</a>
+                        {% if user.is_superuser %}
+                            <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm">Update</a>
+                            <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

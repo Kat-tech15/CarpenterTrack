@@ -1,23 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-5">
-    <h4 class="text-center" style="color: steelblue; font-style: oblique;">Edit Order</h4>
+    <h4 class="text-center text-primary mb-4">Edit Order</h4>
 
     <div class="card shadow-sm p-4 mx-auto" style="width: 400px; border-radius: 15px;">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+
+            {% if not order.is_customer_order %}
             <div class="mb-3">
-                <label for="product" class="form-label">Product</label>
+                <label class="form-label">Product</label>
                 <input type="text" class="form-control" value="{{ order.product.name }}" disabled>
             </div>
+            {% else %}
             <div class="mb-3">
-                <label for="quantity" class="form-label">Quantity</label>
-                <input type="number" name="quantity" class="form-control" value="{{ order.deposit }}" min="1" required>
+                <label class="form-label">Unit Price</label>
+                <input type="number" step="0.01" name="unit_price" class="form-control" value="{{ unit_price }}" min="0" required>
             </div>
+            {% endif %}
+
             <div class="mb-3">
-                <label for="deposit" class="form-label">Deposit</label>
+                <label class="form-label">Quantity</label>
+                <input type="number" name="quantity" class="form-control" value="{{ order.quantity }}" min="1" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Deposit</label>
                 <input type="number" step="0.01" name="deposit" class="form-control" value="{{ order.deposit }}" min="0" required>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label">Custom Description</label>
+                <textarea name="custom_description" class="form-control" rows="3">{{ order.custom_description }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Reference Image (optional)</label>
+                <input type="file" name="reference_image" class="form-control">
+            </div>
+
             <div class="d-flex justify-content-between mt-4">
                 <a href="{% url 'my_orders' %}" class="btn btn-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Update Order</button>
